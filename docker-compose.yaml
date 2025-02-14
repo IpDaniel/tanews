@@ -1,12 +1,12 @@
 services:
-
   api:
     build: ./api
     container_name: tanews_app_api
     hostname: web-api
-    volumes: ['./api:/apicode']
+    volumes: ["./api:/apicode"]
     ports:
       - 4000:4000
+    env_file: ./api/.env
 
   db:
     env_file:
@@ -18,5 +18,3 @@ services:
       - ./database-files:/docker-entrypoint-initdb.d/:ro
     ports:
       - 3200:3306
-
-

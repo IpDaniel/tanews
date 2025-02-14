@@ -4,3 +4,11 @@ __pycache__
 secrets/
 .env
 .env.local
+
+
+# i (naman) need a virtual env so im removing it from git
+api/venv
+
+
+# file where Naman is documenting his progress. 
+naman.md
