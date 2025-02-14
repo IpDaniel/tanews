@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Article - Bethesda Matters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_article.css') }}">
+</head>
+<body>
+    <header>
+        <h1 class="masthead">Bethesda Matters</h1>
+        <p>Article Edit Portal</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/" target="_blank">Reader Home</a></li>
+            <li><a href="/articles/search?author={{ current_user.id }}" target="_blank">My Articles</a></li>
+            <li><a href="/writers/write-article">Write Article</a></li>
+            <li><a href="/articles/manage-articles">Manage Articles</a></li>
+            <li><a href="/sidebar/edit-sidebar-widgets">Manage Sidebar</a></li>
+            <li><a href="/auth/logout">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <main class="article-form">
+        <h2>Edit Article</h2>
+        <form id="articleForm" method="PUT">
+            <input type="hidden" id="articleId" value="{{ article_id }}">
+            
+            <div class="form-group">
+                <label for="title">Article Title</label>
+                <input type="text" id="title" name="title" required maxlength="80">
+            </div>
+
+            <div class="form-group">
+                <label for="mainImage">Main Image URL</label>
+                <input type="url" id="mainImage" name="image_url" required>
+            </div>
+
+            <div class="form-group" style="display: none;">
+                <label for="mainImageCaption">Main Image Caption</label>
+                <input type="text" id="mainImageCaption" name="image_caption">
+            </div>
+
+            <div class="form-group">
+                <label for="summary">Article Summary (165 characters max)</label>
+                <textarea id="summary" name="summary" required maxlength="165"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Genre Tags</label>
+                <div class="genre-options">
+                    <!-- Genre options will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div id="authorSelects">
+                <!-- Author selects will be dynamically inserted here -->
+            </div>
+
+            <div class="form-group">
+                <label>Article Content</label>
+                <div id="articleElements"></div>
+                <button type="button" class="control-button" onclick="addTextElement()">Add Text</button>
+                <button type="button" class="control-button" onclick="addImageElement()">Add Image</button>
+            </div>
+
+            <button type="submit" class="submit-button">Update Article</button>
+        </form>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/example_script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+.DS_Store
+secrets.toml
+__pycache__
+secrets/
+.env
+.env.local

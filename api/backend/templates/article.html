@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} - Bethesda Matters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+    <style>
+        /* ... Include existing body, header, nav, and footer styles from index.html ... */
+
+        .article-container {
+            max-width: 70%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .article-cover-image {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-caption {
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            font-style: italic;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin: 1.5rem 0 1rem 0;
+            color: #000;
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-meta span:not(:last-child)::after {
+            content: '|';
+            margin: 0 0.75rem;
+            color: #ddd;
+        }
+
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-image {
+            margin: 2rem 0;
+        }
+
+        .article-image img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include header and nav from index.html -->
+    <header>
+        <h1 class="masthead">Bethesda Matters</h1>
+        <p>Your Trusted Source for Local News</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/find-articles">Find Articles</a></li>
+            <li><a href="/articles/search?genre=Local%20News">Local News</a></li>
+            <li><a href="/articles/search?genre=Politics">Politics</a></li>
+            <li><a href="/articles/search?genre=Business">Business</a></li>
+            <li><a href="/articles/search?genre=Sports">Sports</a></li>
+            <li><a href="/articles/search?genre=Culture">Culture</a></li>
+            <li><a href="/articles/search?genre=Opinion">Opinion</a></li>
+        </ul>
+    </nav>
+
+    <div class="article-container">
+        <img src="{{ article.cover_image }}" alt="{{ article.title }}" class="article-cover-image">
+        <div class="image-caption">{{ article.cover_image_caption }}</div>
+
+        <h1 class="article-title">{{ article.title }}</h1>
+
+        <div class="article-meta">
+            <span>By <a href="#">{{ article.author }}</a></span>
+            <span>Published {{ article.date }}</span>
+            <span>{{ article.read_time }} min read</span>
+        </div>
+
+        <div class="article-content">
+            {% for content in article.content %}
+                {% if content.type == 'text' %}
+                    <p>{{ content.value }}</p>
+                {% elif content.type == 'image' %}
+                    <div class="article-image">
+                        <img src="{{ content.url }}" alt="{{ content.alt }}">
+                        <div class="image-caption">{{ content.caption }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Include footer from index.html -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Meet the Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>News Categories</h4>
+                <ul>
+                    <li><a href="#">Breaking News</a></li>
+                    <li><a href="#">Local Politics</a></li>
+                    <li><a href="#">Community Events</a></li>
+                    <li><a href="#">Business</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Subscribe</h4>
+                <ul>
+                    <li><a href="#">Newsletter Signup</a></li>
+                    <li><a href="#">Digital Edition</a></li>
+                    <li><a href="#">RSS Feeds</a></li>
+                    <li><a href="#">Podcasts</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Advertise with Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="#" target="_blank">Facebook</a>
+            <a href="#" target="_blank">Twitter</a>
+            <a href="#" target="_blank">Instagram</a>
+            <a href="#" target="_blank">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bethesda Matters. All rights reserved.</p>
+            <p>123 Main Street, Bethesda, MD 20814 | Phone: (301) 555-0123 | Email: news@bethesdanews.com</p>
+        </div>
+    </footer>
+</body>
+</html>
