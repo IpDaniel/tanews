@@ -23,7 +23,7 @@ def get_example_data():
 # You can use this format for most of your routes that involve sending a page to the client.
 @example.route('/example-page', methods=['GET'])
 def example_page():
-    # the render_template function in flask takes the name of the template and the variables 
+    # the render_template functione in flask takes the name of the template and the variables 
     # you want to pass to the template. The template must be an html file in the templates folder.
     # You can also use something called Jinja2 which is a templating engine that allows you to 
     # do more complex things in the html file. I recommend not using it for this project, because

@@ -12,3 +12,17 @@ api/venv
 
 # file where Naman is documenting his progress. 
 naman.md
+
+
+
+# specific to my computer?????
+api/__pycache__/
+api/*.pyc
+api/*.pyo
+api/*.pyd
+api/venv/
+api/env/
+api/.Python
+api/*.sqlite3
+api/*.db
+api/instance/
