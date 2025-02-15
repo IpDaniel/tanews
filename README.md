@@ -94,3 +94,9 @@ Things to demo
     - [ ] move up and down
   - [ ] Edit article
   - [ ] Add article
+
+
+
+
+connor modified readme 
+
