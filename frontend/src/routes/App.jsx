@@ -1,9 +1,15 @@
 import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0);
+import TopNav from "../components/TopNav.jsx"; // this is an example of a reusable component. i set
+// up a basic topnav that just returns topnav. need styling.
 
-  return <>this is the main app page</>;
+function App() {
+  return (
+    <>
+      <TopNav />
+      <div>app component page</div>
+    </>
+  );
 }
 
 export default App;
