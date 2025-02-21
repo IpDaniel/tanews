@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 250px;
+    height: 25vh;
+    background: #333;
+    color: white;
+    position: fixed;
+    left: -250px;
+    transition: 0.3s;
+    padding: 20px;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+  
+  .toggle-btn {
+    position: absolute;
+    top: 250px;
+    left: 5px;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .content {
+    text-align: center;
+    margin-left: 600px;
+    padding: 2px;
+  }
