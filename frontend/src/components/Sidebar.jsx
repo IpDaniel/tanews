@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Sidebar.css";
 
-const Sidebar = () => {
-  const API_KEY = import.meta.env.VITE_ALPHA_VANTAGE_KEY;
-  fetch(
-    `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=AAPL&interval=5min&apikey=${API_KEY}`
-  )
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-  return <div className="sidebar-container">sidebar component</div>;
-};
+function SideBar() {
+  const [isOpen, setIsOpen] = useState(false);
 
-export default Sidebar;
+  return (
+    <div className={`sidebar-container ${isOpen ? "open" : ""}`}>
+      {/* Sidebar */}
+      <div className="sidebar">
+        <h2>Sidebar</h2>
+        <ul>
+          <li>Date</li>
+          <li>Time</li>
+          <li>Weather</li>
+          <li>Stock</li>
+        </ul>
+      </div>
+
+      {/* Toggle Button (Hanging on the right) */}
+      <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? "←" : "→"}
+      </button>
+    </div>
+  );
+}
+
+export default SideBar;

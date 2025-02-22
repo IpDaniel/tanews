@@ -3,10 +3,7 @@ import { useState } from "react";
 import TopNav from "../components/TopNav.jsx"; // this is an example of a reusable component. i set
 // up a basic topnav that just returns topnav. need styling.
 import Footer from "../components/Footer.jsx";
-import SideBar from "../components/SideBar.tsx";
-
-
-
+import SideBar from "../components/SideBar.jsx";
 
 function App() {
   return (
