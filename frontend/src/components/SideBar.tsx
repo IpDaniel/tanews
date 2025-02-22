@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import "../styles/SideBar.css";
+import "../styles/Sidebar.css";
 
 
-function SideBar(){
-    const [isOpen, setIsOpen] = useState(false);
+function SideBar() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="container">
-      <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
-        ☰
-      </button>
-      <div className={`sidebar ${isOpen ? "open" : ""}`}>
+    <div className={`sidebar-container ${isOpen ? "open" : ""}`}>
+      {/* Sidebar */}
+      <div className="sidebar">
         <h2>Sidebar</h2>
         <ul>
           <li>Date</li>
           <li>Time</li>
           <li>Weather</li>
+          <li>Stock</li>
         </ul>
       </div>
-      <div className="content">
-        <h1>Main Content</h1>
-        <p>This is the main area.</p>
-      </div>
+
+      {/* Toggle Button (Hanging on the right) */}
+      <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? "←" : "→"}
+      </button>
     </div>
   );
 }
