@@ -1,0 +1,47 @@
+.footer-container {
+  background-color: #121212;
+  color: white;
+  width: 100%;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  margin: auto;
+  padding: 0px 20px;
+  flex-wrap: wrap;
+}
+
+/* Branding Section */
+.footer-branding h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #4b5ae4; /* Same blue shade as TaNews */
+}
+
+.footer-branding p {
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* Quick Links */
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-links a:hover {
+  color: #4b5ae4;
+}
