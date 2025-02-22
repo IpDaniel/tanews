@@ -26,3 +26,5 @@ api/.Python
 api/*.sqlite3
 api/*.db
 api/instance/
+
+frontend/src/styles/SideBar.css
