@@ -1,44 +1,35 @@
-.sidebar-container {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
+.container {
     display: flex;
-    align-items: center;
-}
-
-/* Sidebar */
-.sidebar {
+  }
+  
+  .sidebar {
     width: 250px;
-    height: 70vh;
+    height: 25vh;
     background: #333;
     color: white;
+    position: fixed;
+    left: -250px;
+    transition: 0.3s;
     padding: 20px;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* When Sidebar is Closed */
-.sidebar-container:not(.open) .sidebar {
-    transform: translateX(-100%);
-}
-
-/* Toggle Button */
-.toggle-btn {
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+  
+  .toggle-btn {
     position: absolute;
-    left: 250px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 250px;
+    left: 5px;
     background: #444;
     color: white;
     border: none;
-    padding: 10px 15px;
-    font-size: 18px;
+    padding: 10px;
     cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-/* Adjust Button Position When Sidebar is Closed */
-.sidebar-container:not(.open) .toggle-btn {
-    left: 0;
-}
+  }
+  
+  .content {
+    text-align: center;
+    margin-left: 600px;
+    padding: 2px;
+  }
