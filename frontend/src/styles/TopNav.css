@@ -1,8 +1,91 @@
-.topnav-container {
-  position: fixed;
+/* Reset default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+.topnav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  background-color: #4b5ae4;
+  padding: 12px 20px;
+  position: relative;
   top: 0;
-  background-color: green;
+}
+
+/* Left Logo */
+.nav-left {
+  position: absolute;
+  left: 20px;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+/* Centered Title Logo */
+.nav-center {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.title-logo {
+  height: 50px;
+}
+
+/* Right Icons */
+.nav-right {
+  position: absolute;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.icon {
+  height: 40px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* Profile icon with a background */
+.profile-icon {
+  background-color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+/* Bottom Navigation */
+.nav-bottom {
   width: 100%;
-  text-align: center;
+  background-color: #b0c4ff;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+
+  padding: 10px 0;
+}
+
+.nav-bottom a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #3a50d9;
+  position: relative;
+}
+
+/* Vertical dividers between navigation items */
+.nav-bottom a:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 20px;
+  background-color: black;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
