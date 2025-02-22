@@ -89,3 +89,7 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.nav-bottom Link:hover {
+  color: black;
+}
