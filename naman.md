@@ -129,3 +129,13 @@ docker ps
 
 - article.txt files in database-files/
   - the hardcoded text data that daniel used in his initial project. cool that he included it.
+
+## react stuff:
+
+frontend
+
+- src
+  - styles
+  - components
+  - routes
+  - Main.jsx (app entry point, add all routes here. )
