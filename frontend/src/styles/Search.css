@@ -1,0 +1,38 @@
+.search-container {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+  background-color: white; /* Adjust as needed */
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 500px; /* Adjust to match Figma design */
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  padding: 12px 15px;
+  font-size: 16px;
+  outline: none;
+}
+
+.filter-btn {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.filter-btn img {
+  width: 20px; /* Adjust size based on Figma */
+  height: 20px;
+}
