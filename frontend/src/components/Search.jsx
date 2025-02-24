@@ -4,7 +4,7 @@ import "../styles/Search.css";
 import filter_icon from "../../public/filter_icon.svg";
 
 const Search = ({ articles }) => {
-  const [query, setQuery] = useState("yoooo");
+  const [query, setQuery] = useState("");
   const [filteredArticles, setFilteredArticles] = useState([]);
 
   // Function to filter articles based on user input

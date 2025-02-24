@@ -5,6 +5,9 @@ import TopNav from "../components/TopNav.jsx"; // this is an example of a reusab
 import Footer from "../components/Footer.jsx";
 import SideBar from "../components/Sidebar.jsx";
 import SearchBar from "../components/Search.jsx";
+import ArticlePeek from "../components/ArticlePeek.jsx";
+
+import { sample_article_1 } from "../sample.data.js";
 
 function App() {
   const articles = [
@@ -18,6 +21,7 @@ function App() {
       <TopNav />
       <SideBar />
       <SearchBar articles={articles} />
+      <ArticlePeek article={sample_article_1} />
       <div></div>
       <Footer />
     </>

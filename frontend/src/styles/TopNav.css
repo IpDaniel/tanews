@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+.topnav-container,
+.nav-bottom {
+  z-index: 1000000000;
+}
+
 .topnav-container {
   display: flex;
   align-items: center;
