@@ -5,7 +5,7 @@ const API_KEY = import.meta.env.VITE_ALPHAVANTAGE_API_KEY;
 const STOCK_SYMBOLS = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "NVDA"];
 
 function SideBar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [stockData, setStockData] = useState({});
 
   useEffect(() => {

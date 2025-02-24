@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "../styles/App.css";
 
 import TopNav from "../components/TopNav.jsx"; // this is an example of a reusable component. i set
 // up a basic topnav that just returns topnav. need styling.
@@ -7,7 +8,7 @@ import SideBar from "../components/Sidebar.jsx";
 import SearchBar from "../components/Search.jsx";
 import ArticlePeek from "../components/ArticlePeek.jsx";
 
-import { sample_article_1 } from "../sample.data.js";
+import { sample_article_1, sample_article_2 } from "../sample.data.js";
 
 function App() {
   const articles = [
@@ -21,7 +22,11 @@ function App() {
       <TopNav />
       <SideBar />
       <SearchBar articles={articles} />
-      <ArticlePeek article={sample_article_1} />
+      <div className="article-peeks">
+        <ArticlePeek article={sample_article_1} />
+        <ArticlePeek article={sample_article_2} />
+      </div>
+
       <div></div>
       <Footer />
     </>

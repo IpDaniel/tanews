@@ -1,0 +1,9 @@
+/* Styles for the Article Peek Container */
+.article-peeks {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adds space between article previews */
+  max-width: 800px; /* Limits width for better readability */
+  margin: 40px auto; /* Centers content with space around */
+  padding: 20px;
+}

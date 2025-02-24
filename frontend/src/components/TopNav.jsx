@@ -16,7 +16,9 @@ const TopNav = () => {
           </a>
         </div>
         <div className="nav-center">
-          <img src="/tanews.svg" alt="tanews-logo" className="title-logo" />
+          <a href="/">
+            <img src="/tanews.svg" alt="tanews-logo" className="title-logo" />
+          </a>
         </div>
         <div className="nav-right">
           <Link to="/settings">
