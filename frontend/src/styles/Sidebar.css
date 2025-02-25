@@ -81,7 +81,7 @@ h2 {
 /* Toggle Button */
 .toggle-button {
   position: absolute;
-  left: 100%;
+  left: 105%;
   top: 50%;
   transform: translateY(-50%);
   background: #444;

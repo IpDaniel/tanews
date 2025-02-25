@@ -13,6 +13,8 @@
   margin-bottom: 20px;
   padding: 15px;
   cursor: pointer;
+  width: 70%;
+  margin-left: 350px;
 }
 
 .article-peek-continer:hover {

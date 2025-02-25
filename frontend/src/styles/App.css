@@ -1,9 +1,29 @@
 /* Styles for the Article Peek Container */
-.article-peeks {
+/* Ensure the entire page takes up at least the full viewport height */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Adds space between article previews */
-  max-width: 800px; /* Limits width for better readability */
-  margin: 40px auto; /* Centers content with space around */
-  padding: 20px;
+}
+
+/* Main content container (everything except the footer) */
+.app-container {
+  flex: 1; /* Makes sure content expands to push the footer down */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Footer should stick to the bottom */
+.footer-container {
+  background-color: #121212;
+  color: white;
+  width: 100%;
+  padding: 10px 0;
+  position: relative; /* Change this */
+  bottom: 0;
+  text-align: center;
+  flex-shrink: 0; /* Prevents the footer from shrinking */
 }
