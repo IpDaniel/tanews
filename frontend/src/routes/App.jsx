@@ -14,7 +14,7 @@ import {
   sample_article_3,
   sample_article_4,
   sample_article_5,
-  sample_article_6,
+  sample_article_6, 
 } from "../sample.data.js";
 
 function App() {
