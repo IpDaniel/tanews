@@ -4,6 +4,15 @@ import "../styles/Sidebar.css";
 const API_KEY = import.meta.env.VITE_ALPHAVANTAGE_API_KEY;
 const STOCK_SYMBOLS = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "NVDA"];
 
+// for time/date
+const date = new Date();
+    const showTime = date.getHours() 
+        + ':' + date.getMinutes() 
+        + ":" + date.getSeconds();
+    const showDate =  date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+
+  
+
 function SideBar() {
   const [isOpen, setIsOpen] = useState(true);
   const [stockData, setStockData] = useState({});
@@ -58,6 +67,20 @@ function SideBar() {
               </div>
             ))}
           </div>
+        </div>
+        <div className="clock-section">
+          <h2> Today </h2>
+          <div className =  "Date" >
+          <h2 align="center">Date:</h2>
+          <h3 align="center"> {showDate}</h3>
+          </div>
+          <div className="Time">
+            <h2 align="center">Current Time</h2>
+            <h3 align="center"> {showTime}</h3>
+        </div>
+
+
+
         </div>
       </div>
       <button className="toggle-button" onClick={() => setIsOpen(!isOpen)}>
