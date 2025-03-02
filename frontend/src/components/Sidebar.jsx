@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Sidebar.css";
 
-
 const API_KEY = import.meta.env.VITE_ALPHAVANTAGE_API_KEY;
 const STOCK_SYMBOLS = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "NVDA"];
 
 // for time/date
 const date = new Date();
-    const showDate = '3' + '/' + date.getDate() + '/' + date.getFullYear();
-
-  
+const showDate = "3" + "/" + date.getDate() + "/" + date.getFullYear();
 
 function SideBar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -24,7 +21,6 @@ function SideBar() {
   }
 
   setInterval(clock, 1000);
-
 
   useEffect(() => {
     const fetchStockPrices = async () => {
@@ -57,45 +53,61 @@ function SideBar() {
 
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
+            
       <div className="sidebar-content">
-        
-
-       
-
+                                 
         <div className="clock-section">
-          <div className =  "Date" >
-          <h2 align="center"> {showDate}</h2>
+                    
+          <div className="Date">
+                      <h2 align="center"> {showDate}</h2>
+                      
           </div>
+                    
           <div className="Time">
-            <h2 align="center"> {time}</h2>
-        </div>
-
-        <div className="stock-section">
-          <h3>Stock Prices</h3>
-          <div className="stock-grid">
-            {STOCK_SYMBOLS.map((symbol) => (
-              <div className="stock-card" key={symbol}>
-                <span className="stock-symbol">{symbol}</span>
-                <span className="stock-price">
-                  <a
-                    href={`https://finance.yahoo.com/quote/${symbol}`}
-                    target="_blank"
-                  >
-                    ${stockData[symbol] || "Loading..."}
-                  </a>
-                </span>
-              </div>
-            ))}
+                        <h2 align="center"> {time}</h2>
+                    
           </div>
+                  
+          <div className="stock-section">
+                      <h3>Stock Prices</h3>
+                      
+            <div className="stock-grid">
+                          
+              {STOCK_SYMBOLS.map((symbol) => (
+                <div className="stock-card" key={symbol}>
+                                  <span className="stock-symbol">{symbol}</span>
+                                  
+                  <span className="stock-price">
+                                      
+                    <a
+                      href={`https://finance.yahoo.com/quote/${symbol}`}
+                      target="_blank"
+                    >
+                                          ${stockData[symbol] || "Loading..."}
+                                        
+                    </a>
+                                    
+                  </span>
+                                
+                </div>
+              ))}
+                        
+            </div>
+                    
+          </div>
+                  <div className="weather-section">        </div>
+                  
         </div>
-
-        <div className = "weather-section">
-
-
-        </div>
+              
       </div>
-      )
+            
+      <button className="toggle-button" onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? "←" : "→"}
+              
+      </button>
+          
+    </div>
+  );
+}
 
-      
-
-
+export default SideBar;
