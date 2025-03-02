@@ -9,5 +9,5 @@ COPY . .
 
 EXPOSE 4000
 
-CMD [ "python", "backend_app.py"]
+CMD [ "python", "tanews_backend/tanews_backend.py"]
 

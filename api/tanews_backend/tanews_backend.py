@@ -24,7 +24,7 @@ def create_app():
     CORS(app)
     
     # test route
-    @app.route('api/health', methods=['GET'])
+    @app.route('/api/health', methods=['GET'])
     def test():
         return jsonify({'message': 'TaNews API is running!'})
     
