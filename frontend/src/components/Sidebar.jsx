@@ -1,12 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Sidebar.css";
 
+
 const API_KEY = import.meta.env.VITE_ALPHAVANTAGE_API_KEY;
 const STOCK_SYMBOLS = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "NVDA"];
+
+// for time/date
+const date = new Date();
+    const showDate = '3' + '/' + date.getDate() + '/' + date.getFullYear();
+
+  
 
 function SideBar() {
   const [isOpen, setIsOpen] = useState(true);
   const [stockData, setStockData] = useState({});
+
+  let now = new Date().toLocaleTimeString();
+  let [time, updateTime] = useState(now);
+
+  function clock() {
+    const newTime = new Date().toLocaleTimeString();
+    updateTime(newTime);
+  }
+
+  setInterval(clock, 1000);
+
 
   useEffect(() => {
     const fetchStockPrices = async () => {
@@ -40,7 +58,18 @@ function SideBar() {
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="sidebar-content">
-        <h2>Sidebar</h2>
+        
+
+       
+
+        <div className="clock-section">
+          <div className =  "Date" >
+          <h2 align="center"> {showDate}</h2>
+          </div>
+          <div className="Time">
+            <h2 align="center"> {time}</h2>
+        </div>
+
         <div className="stock-section">
           <h3>Stock Prices</h3>
           <div className="stock-grid">
@@ -59,12 +88,14 @@ function SideBar() {
             ))}
           </div>
         </div>
-      </div>
-      <button className="toggle-button" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? "←" : "→"}
-      </button>
-    </div>
-  );
-}
 
-export default SideBar;
+        <div className = "weather-section">
+
+
+        </div>
+      </div>
+      )
+
+      
+
+
