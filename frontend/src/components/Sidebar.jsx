@@ -93,16 +93,9 @@ function SideBar() {
 
 
         </div>
-
-
-
-        </div>
       </div>
-      <button className="toggle-button" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? "←" : "→"}
-      </button>
-    </div>
-  );
-}
+      )
 
-export default SideBar;
+      
+
+
