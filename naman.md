@@ -143,3 +143,23 @@ frontend
 ### Ideas for the future:
 
 - use scikit learn or huggingface to detect bias and display that bias at the top of each article (eg: conservative, liberal, opinionated, etc.)
+
+# authorization (what adit was talking about):
+
+- JWT: JSON web tokens
+- JWT is for authorization, and not authentication.
+
+  - making sure that the user sending requests to the backend is the same user that logged in during the authentication process
+
+  - this is done using session, sessionId and cookies (fuck this is going to be hard)
+
+  - how this stuff works:
+
+  1. POST /user/login: (from client)
+  2. server receives POST request, stores user in session memory, sends sessionId as a response (THIS IS CALLED A COOKIE )
+
+  3. Next time any request is made to the server, the sessionId is sent as well, and
+  4. Server is able to get user from session based on Id and verify them.
+  5. is verified, server sends a response.
+
+  6. Why? if we are using exterinal APIs, this is to make sure that random people arent getting the benefits from it. Additionally, no external user can overuse the sevrer.
