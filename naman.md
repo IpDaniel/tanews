@@ -139,3 +139,7 @@ frontend
   - components
   - routes
   - Main.jsx (app entry point, add all routes here. )
+
+### Ideas for the future:
+
+- use scikit learn or huggingface to detect bias and display that bias at the top of each article (eg: conservative, liberal, opinionated, etc.)

@@ -6,7 +6,8 @@ USE TaNewsDB;
 
 CREATE TABLE User (
     user_id VARCHAR(255) PRIMARY KEY,
-    image_url VARCHAR(2083),
+    full_name VARCHAR(225) NOT NULL,
+    image_url VARCHAR(2083) NULL,
     isAdmin BOOLEAN
 );
 
