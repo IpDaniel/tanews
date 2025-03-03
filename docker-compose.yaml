@@ -18,3 +18,19 @@ services:
       - ./database-files:/docker-entrypoint-initdb.d/:ro
     ports:
       - 3200:3306
+
+  # frontend:
+  #   build: ./frontend
+  #   container_name: tanews_app_frontend
+  #   hostname: web-frontend
+  #   ports:
+  #     - 3000:8080
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules # Prevents issues with node_modules inside container
+  #   environment:
+  #     - NODE_ENV=development
+  #     - CHOKIDAR_USEPOLLING=true # Fixes hot reload issues in Docker
+  #   command: ["npm", "run", "dev"]
+  #   depends_on:
+  #     - api

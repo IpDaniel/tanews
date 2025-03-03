@@ -12,7 +12,7 @@ def get_users():
     cursor.execute("SELECT * FROM users ORDER BY name DESC")
     users = cursor.fetchall()
     cursor.close()
-    return jsonify({'users': users})
+    return jsonify({'users': users}), 200
 
 
 # get command to get a user by ID
