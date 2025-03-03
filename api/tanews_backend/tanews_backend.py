@@ -6,6 +6,7 @@ import os
 
 from db_connection import db
 from routes.articles import articles  # Import articles route
+from routes.users import users
 
 
 
@@ -30,6 +31,7 @@ def create_app():
     
     # Register Routes
     app.register_blueprint(articles, url_prefix='/api/articles')
+    app.register_blueprint(users, url_prefix='/api/users')
     
     return app
 
