@@ -1,5 +1,6 @@
 // WeatherWidget.js
 import React, { useState, useEffect } from 'react';
+import "../styles/Weather.css";
 import axios from 'axios';
 
 const WeatherWidget = ({ city = 'Boston' }) => {
@@ -18,14 +19,14 @@ const WeatherWidget = ({ city = 'Boston' }) => {
       }
     };
     fetchWeather();
-  }, [city]);
+  }, [city]);3
 
   return (
-    <div className="weather-widget p-4 bg-gray-800 text-white rounded-lg">
+    <div className="weather-widget">
       {weather ? (
         <>
-          <h3 className="text-lg font-bold">{weather.location.name}</h3>
-          <p>{weather.current.temp_c}°C</p>
+          <h3 className="weather">{weather.location.name}</h3>
+          <p>{weather.current.temp_f}°F</p>
           <p>{weather.current.condition.text}</p>
           <img src={weather.current.condition.icon} alt="Weather icon" />
         </>
