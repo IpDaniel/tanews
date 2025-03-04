@@ -21,4 +21,5 @@ api/
         - db_connection/
         - routes/
             - articles.py (Naman started, patty will finish) => liking, posting, getting, everything functionality. 
-            - users.py => adding users, admin, authors, etc. 
+            - users.py => adding users, admin, authors, etc.
+            
