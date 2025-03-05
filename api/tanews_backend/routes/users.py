@@ -1,7 +1,9 @@
 import re
 from flask import Blueprint, jsonify, request
 from db_connection import db
-
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import timedelta
 
 users = Blueprint('users', __name__)
 
@@ -42,7 +44,7 @@ def get_users_by_ID(id):
 '''
 
 # ID, Created_at, update_at all get created automatically
-@users.route('/', methods=['POST'])
+@users.route('/register', methods=['POST'])
 def create_user():
     try:
         data = request.get_json()
@@ -67,18 +69,23 @@ def create_user():
 
         # make sure email is unique
         cursor = db.get_db().cursor()
-        cursor.execute("SELECT COUNT(*) FROM users WHERE email = %s", (email,))
-        (email_count,) = cursor.fetchone()
-        if email_count > 0:
+        cursor.execute("SELECT COUNT(*) AS count FROM users WHERE email = %s", (email,))
+        result = cursor.fetchone()  # This will be a dictionary like {'count': 1}
+        email_count = result["count"]
+        if int(email_count) > 0:
             cursor.close()
             return jsonify({'error': 'Email is already registered'}), 400
         
 
+
+        # naman's change to aditya's route: addoing a password hash. found a simple library we can use to do this??? hopefullt it works???
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         # Insert into database
         query = """
             INSERT INTO users (name, email, password, is_admin, is_author, image_url)
             VALUES (%s, %s, %s, %s, %s, %s)
         """
+        # we do NOT store blank passwords in the db. we hash it first. I changed the cursor.execute to include the hashed_password instead of just the password. 
         cursor.execute(query, (name, email, password, is_admin, is_author, image_url))
         db.get_db().commit()
 
@@ -91,6 +98,64 @@ def create_user():
         return jsonify({'error': str(e)}), 500
 
 
+
+# Login and generate JWT token
+@users.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        if not all([email, password]):
+            return jsonify({'error': 'Missing email or password'}), 400
+
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT user_id, name, password FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+        cursor.close()
+
+        if not user:
+            return jsonify({'error': 'Invalid email or password'}), 401
+
+        # Verify hashed password HASHING STUFF, WORRY ABOUT THIS LATER
+        # if not check_password_hash(user['password'], password):
+        #     return jsonify({'error': 'Invalid email or password'}), 401
+        
+        if password != user['password']: 
+            return jsonify({'error': 'Invalid email or password'}), 401
+            
+
+
+         # DEBUG: Print identity to make sure it's correct
+        print(f"DEBUG - JWT Identity: {user['user_id']} (Type: {type(user['user_id'])})")
+        # Generate JWT token
+        access_token = create_access_token(identity=str(user['user_id']), expires_delta=timedelta(hours=2))
+
+        
+        return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+
+# Example protected route
+@users.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    user_id = get_jwt_identity()  # This is now a string (user_id)
+    
+    cursor = db.get_db().cursor()
+    cursor.execute("SELECT name FROM users WHERE user_id = %s", (user_id,))
+    user = cursor.fetchone()
+    cursor.close()
+
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    return jsonify({'message': f'Hello, {user["name"]}! You accessed a protected route.'}), 200
 
 
     

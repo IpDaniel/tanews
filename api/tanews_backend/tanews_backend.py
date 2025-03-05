@@ -3,6 +3,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 
+from flask_jwt_extended import JWTManager
 
 from db_connection import db
 from routes.articles import articles  # Import articles route
@@ -20,6 +21,10 @@ def create_app():
     app.config['MYSQL_DATABASE_PORT'] = int(os.getenv('DB_PORT').strip())
     app.config['MYSQL_DATABASE_DB'] = os.getenv('DB_NAME').strip()
     
+    
+    # JWT Configuration
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")  # Load JWT Secret Key from .env
+    jwt = JWTManager(app)  # Initialize JWT
     
     db.init_app(app)  # Connect Flask with MySQL
     CORS(app)
