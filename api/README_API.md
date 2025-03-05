@@ -4,6 +4,7 @@ MYSQL_HOST=db
 MYSQL_USER=root
 MYSQL_PASSWORD=your_password
 MYSQL_DATABASE=TaNewsDB
+JWT_SECRET_KEY=yourSuperSecretJWTKey
 
         MAKE SURE MYSQL_DATABASE IS TaNewsDB or this wont work/
 
