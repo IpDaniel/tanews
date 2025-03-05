@@ -27,6 +27,7 @@ CREATE TABLE articles (
     read_time INT,
     publish_date DATETIME,
     update_date DATETIME,
+    head_url VARCHAR(500) NOT NULL DEFAULT 'https://i.fbcd.co/products/resized/resized-750-500/1-f022677e81b39328d76d98ef4518decbe04c238492bfa593acb8c44c2d7c5546.jpg',
     PRIMARY KEY (article_id)
 ) ENGINE = InnoDB;
 
