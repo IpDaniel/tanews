@@ -1,0 +1,38 @@
+.weather-widget {
+    background-color: #2a2a3a;
+    border-radius: 8px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #2a2a3a;
+  }
+  
+  .weather-widget h3.weather {
+    font-size: 1.5rem;
+    color: #f0f4f8;
+    margin-bottom: 10px;
+  }
+  
+  .weather-widget p {
+    color: #f0f4f8;
+    font-size: 1.2rem;
+    margin: 5px 0;
+  }
+  
+  .weather-widget img {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+  }
+  
+  .weather-widget p {
+    font-weight: bold;
+  }
+  
+  .weather-widget p:last-child {
+    font-size: 0.9rem;
+    color: #2a2a3a;
+  }
+  
