@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import react, { useEffect, useState } from "react";
 import "../styles/App.css";
 
 import TopNav from "../components/TopNav.jsx"; // this is an example of a reusable component. i set
@@ -8,21 +8,15 @@ import SideBar from "../components/Sidebar.jsx";
 import SearchBar from "../components/Search.jsx";
 import ArticlePeek from "../components/ArticlePeek.jsx";
 
-import {
-  sample_article_1,
-  sample_article_2,
-  sample_article_3,
-  sample_article_4,
-  sample_article_5,
-  sample_article_6, 
-} from "../sample.data.js";
-
 function App() {
-  const articles = [
-    { id: 1, title: "AI in HR: The Future of Recruitment" },
-    { id: 2, title: "Stock Market Insights for 2025" },
-    { id: 3, title: "Tech Startups to Watch" },
-  ];
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/articles/`) // no auth needed to access this page?
+      .then((res) => res.json())
+      .then((data) => setArticles(data.articles))
+      .catch((err) => console.error("Error fetching habits:", err));
+  }, []); // only make this call on page mount
 
   return (
     <div className="app-container">
@@ -30,12 +24,9 @@ function App() {
       <SideBar />
       <SearchBar articles={articles} />
       <div className="article-peeks">
-        <ArticlePeek article={sample_article_1} />
-        <ArticlePeek article={sample_article_2} />
-        <ArticlePeek article={sample_article_3} />
-        <ArticlePeek article={sample_article_4} />
-        <ArticlePeek article={sample_article_5} />
-        <ArticlePeek article={sample_article_6} />
+        {articles.map((article) => (
+          <ArticlePeek article={article} />
+        ))}
       </div>
 
       <div></div>
