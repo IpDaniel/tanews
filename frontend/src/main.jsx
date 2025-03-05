@@ -11,6 +11,9 @@ import Privacy from "./routes/Privacy.jsx";
 import Profile from "./routes/Profile.jsx";
 import Error404 from "./routes/Error404.jsx";
 import Settings from "./routes/Settings.jsx";
+import Register from "./routes/Register.jsx";
+import Login from "./routes/Login.jsx";
+import Dashboard from "./routes/Dashboard.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -21,6 +24,9 @@ const router = createBrowserRouter([
   { path: "/profile", element: <Profile /> },
   { path: "/*", element: <Error404 /> },
   { path: "/settings", element: <Settings /> },
+  { path: "/register", element: <Register /> },
+  { path: "/login", element: <Login /> },
+  { path: "/dashboard", element: <Dashboard /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
