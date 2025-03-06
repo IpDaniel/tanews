@@ -7,31 +7,32 @@ articles = Blueprint('articles', __name__)
 
 
 # gets all articles in the database. 
+# gets all articles in the database.
 @articles.route('/', methods=['GET'])
 def get_articles():
     cursor = db.get_db().cursor()
     query = """
-            SELECT
+        SELECT
             a.article_id,
             a.title,
             a.text,
             a.read_time,
+            a.head_url, 
             a.publish_date,
-            u.user_id,
-            u.name AS author_name,
-            c.name AS category
+            COALESCE(u.user_id, -1) AS user_id,  -- Default user_id if no author
+            COALESCE(u.name, 'No author set') AS author_name,
+            COALESCE(c.name, 'No category set') AS category
         FROM TaNewsDB.articles a
-        JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
-        JOIN TaNewsDB.users u ON aa.user_id = u.user_id
-        JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
-        JOIN TaNewsDB.categories c ON ac.category_id = c.category_id;
-
-
-        """
+        LEFT JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
+        LEFT JOIN TaNewsDB.users u ON aa.user_id = u.user_id
+        LEFT JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
+        LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id;
+    """
     cursor.execute(query)
     articles = cursor.fetchall()
     cursor.close()
     return jsonify({'articles': articles})
+
 
 
 
