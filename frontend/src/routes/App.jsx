@@ -24,8 +24,8 @@ function App() {
       <SideBar />
       <SearchBar articles={articles} />
       <div className="article-peeks">
-        {articles.map((article) => (
-          <ArticlePeek article={article} />
+        {articles.map((article, index) => (
+          <ArticlePeek key={index} article={article} />
         ))}
       </div>
 

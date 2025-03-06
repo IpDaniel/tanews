@@ -27,7 +27,6 @@ const Login = () => {
       if (!response.ok) throw new Error(data.error || "Login failed");
 
       localStorage.setItem("token", data.access_token); // Store JWT token
-      console.log(data.access_token);
       navigate("/dashboard"); // Redirect to a protected page
     } catch (err) {
       setError(err.message);

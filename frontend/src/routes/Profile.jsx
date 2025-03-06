@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Profile.css";
 import TopNav from "../components/TopNav";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+
+  const navigate = useNavigate(); // using this to navigate to /login on handleLogout
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,17 +38,22 @@ const Profile = () => {
     };
 
     fetchUserData();
-  });
+  }, [user]);
   return (
     <>
       <TopNav />
       <div className="profile-container">
         {user ? (
-          <p>you are logged in !</p>
+          <div className="logged-in">
+            <p>you are logged in !</p>
+            <button onClick={handleLogout}>log out</button>
+          </div>
         ) : (
-          <a href="/login">
-            <button>go and login/ register</button>
-          </a>
+          <div className="not-logged-in">
+            <a href="/login">
+              <button>go and login/ register</button>
+            </a>
+          </div>
         )}
       </div>
     </>

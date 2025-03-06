@@ -52,3 +52,31 @@ VALUES
 ((SELECT user_id FROM users WHERE name = 'Daniel Ip'), 5);
 
 SELECT 'Example data script completed successfully' as message;
+
+-- Insert sample articles into the `articles` table
+INSERT INTO articles (title, text, read_time, publish_date, update_date, head_url)
+VALUES 
+(
+    'Local Community Garden Flourishes Amid Urban Landscape', 
+    'In the heart of the city, a once-abandoned lot has transformed into a thriving community garden, bringing together residents from all walks of life. This green oasis not only provides fresh produce but also fosters a sense of unity and purpose among volunteers. The garden''s coordinator, Maria Lopez, shared, "What started as a small project has blossomed into a vital part of our community. It''s amazing to see how nature can bring people together." With over 50 types of vegetables, fruits, and herbs, the garden supplies local markets and restaurants, promoting sustainable urban agriculture. Workshops on gardening and sustainability are held monthly, attracting participants eager to learn and contribute. Future plans include expanding the garden to include a children''s play area and hosting seasonal festivals to celebrate the harvests.', 
+    4, 
+    '2025-02-15', 
+    '2025-02-16', 
+    'https://i.ytimg.com/vi/sxrzdev5l3A/maxresdefault.jpg'
+),
+(
+    'Tech Start-Up Launches Innovative App to Reduce Food Waste', 
+    'A local tech start-up has unveiled a new app designed to connect restaurants with surplus food to charities in need. This innovative solution aims to tackle the growing issue of food waste while supporting communities facing food insecurity. CEO Alex Thompson explained, "Our goal is to create a seamless platform where businesses can easily donate excess food, ensuring it reaches those who need it most." Since its launch, the app has partnered with over 100 eateries and 25 charities, redistributing thousands of meals that would have otherwise gone to waste. Users can track donations, receive notifications about available food, and access resources on sustainable practices.', 
+    3, 
+    '2025-03-01', 
+    '2025-03-02', 
+    'https://picsum.photos/200'
+),
+(
+    'Historic Theater Reopens After Major Renovations', 
+    'After two years of extensive renovations, the Grand Palace Theater has reopened its doors, much to the delight of art enthusiasts and historians alike. The restoration project aimed to preserve the theater''s rich history while incorporating modern amenities. Architectural historian, Dr. Emily Carter, noted, "The Grand Palace is a testament to our cultural heritage. Its revival ensures that future generations can experience its grandeur." The theater now boasts state-of-the-art sound and lighting systems, improved seating, and enhanced accessibility features. The inaugural performance, a sold-out classical concert, received rave reviews from attendees. Upcoming events include a mix of theatrical productions, musical performances, and community gatherings, solidifying the theater''s role as a cultural hub.', 
+    5, 
+    '2025-01-20', 
+    '2025-01-21', 
+    'https://picsum.photos/200'
+);

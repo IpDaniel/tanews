@@ -15,7 +15,7 @@ const ArticlePeek = ({ article }) => {
           <h3 className="article-title">
             category missing - to implement in routes.{" "}
           </h3>
-          <h2 className="article-headline">{article.text.split(".")[0]}...</h2>
+          <h2 className="article-headline">{article.title.split(".")[0]}...</h2>
           <p className="article-preview">{article.text.substring(0, 120)}...</p>
           <p className="article-read-time">{article.read_time} min read</p>
         </div>

@@ -141,7 +141,7 @@ def login():
 
 
 
-# Example protected route
+# Example protected route, this just verifies that a user exists in the db. 
 @users.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
@@ -158,6 +158,37 @@ def protected():
     return jsonify({'message': f'Hello, {user["name"]}! You accessed a protected route.'}), 200
 
 
-    
+   
+# example protected, route, only gives access if user is ADMIN status
+@users.route('/isadmin', methods=["GET"])
+@jwt_required()
+def is_admin(): 
+    try: 
+        user_id = get_jwt_identity()
+
+        # Ensure user_id is an integer
+        user_id = int(user_id)
+
+        # ✅ Corrected cursor initialization
+        cursor = db.get_db().cursor()
+        
+        # ✅ Fetch both `name` and `is_admin`
+        cursor.execute("SELECT name, is_admin FROM users WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+        cursor.close()
+        
+        if not user: 
+            return jsonify({'message': "You are not authorized."}), 404
+        
+        # ✅ Ensure `is_admin` is correctly checked
+        if not bool(user["is_admin"]):  
+            return jsonify({'message': f'Hello, {user["name"]}, you are not an admin.'}), 403
+
+        # ✅ Success Case: User is an admin
+        return jsonify({'message': f'{user["name"]}, you are authorized and an admin!'}), 200
+        
+    except Exception as e: 
+        return jsonify({'error': str(e)}), 500  # ✅ Use 500 for internal server errors
+
 
 
