@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import TopNav from "../components/TopNav.jsx";
 import "../styles/ArticlesPage.css";
 import ArticlePeek from "../components/ArticlePeek.jsx";
 
 const ArticlesPage = () => {
-  const [articles, setArticles] = useState([]);
+  const [article, setArticle] = useState(null);
 
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/articles/`)
-      .then((res) => res.json())
-      .then((data) => setArticles(data.articles))
-      .catch((err) => console.error("Error fetching habits:", err));
-  }, []); // only make this call on page mount
+  const { id } = useParams();
+
+  // ujse effect hook to fetch the specific article from backend.
+
   return (
     <>
       <TopNav />
       <div className="article-page-container">
-        {articles.map((article) => (
-          <ArticlePeek article={article} />
-        ))}
+        <p>rishi: implement logic for viewing individual articles</p>
+        <p>{id}</p>
       </div>
     </>
   );

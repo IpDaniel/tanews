@@ -15,6 +15,7 @@ import Register from "./routes/Register.jsx";
 import Login from "./routes/Login.jsx";
 import Dashboard from "./routes/Dashboard.jsx";
 import AdminAddArticle from "./routes/AdminAddArticle.jsx";
+import ArticlePage from "./routes/ArticlesPage.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/authorized/add-article", element: <AdminAddArticle /> },
+  { path: "/article", element: <ArticlePage /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
