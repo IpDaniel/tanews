@@ -3,7 +3,9 @@
 ## Needs to be done
 
 - [ ] **Change rest api /api/articles route to include an array of categories and an array of authors** - Assigned to @Aditya
-- [ ] **Admin posting articles page with auth** - unclaimed
+- [ ] **Admin posting articles page with auth** -
+  - make UI for the admin add article page
+  - make backend flask routes to add an article => also add categories and images and author names, @ Aditya
 - [ ] **Task Name** - Assigned to @
 
 ## ✅ Completed

@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
 from db_connection import db
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+
 
 
 articles = Blueprint('articles', __name__)
@@ -36,9 +38,23 @@ def get_articles():
 
 
 
+# not secured yet. habe to add jwt_required() 
+# ADITYA IS DOING THIS 
 @articles.route('/', methods=['POST'])
-def add_article():
+@jwt_required()
+def add_article(): # JSON object, title, headline, readtime, publish date, publish authors, categories, Head URL.; Make sure evrrythign is there
     try: 
+        
+        
+        # have to add to authors table, categories table, and articles table. 
+        user_id = get_jwt_identity();
+        
+        # have a check for if the person is an admin => 
+            # if fase return 500 status
+        
+        # if true
+            # parse data from route. 
+        
         data = request.get_json()
         
         
