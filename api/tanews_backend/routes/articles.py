@@ -10,10 +10,29 @@ articles = Blueprint('articles', __name__)
 @articles.route('/', methods=['GET'])
 def get_articles():
     cursor = db.get_db().cursor()
-    cursor.execute("SELECT * FROM articles ORDER BY publish_date DESC")
+    query = """
+            SELECT
+            a.article_id,
+            a.title,
+            a.text,
+            a.read_time,
+            a.publish_date,
+            u.user_id,
+            u.name AS author_name,
+            c.name AS category
+        FROM TaNewsDB.articles a
+        JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
+        JOIN TaNewsDB.users u ON aa.user_id = u.user_id
+        JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
+        JOIN TaNewsDB.categories c ON ac.category_id = c.category_id;
+
+
+        """
+    cursor.execute(query)
     articles = cursor.fetchall()
     cursor.close()
     return jsonify({'articles': articles})
+
 
 
 @articles.route('/', methods=['POST'])

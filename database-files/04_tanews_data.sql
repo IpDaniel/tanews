@@ -80,3 +80,33 @@ VALUES
     '2025-01-21', 
     'https://picsum.photos/200'
 );
+
+-- Insert Into the categories data
+INSERT INTO categories (name, description) VALUES
+('Politics', 'News and analysis on political events and government policies.'),
+('Technology', 'Latest updates on tech trends, AI, and gadgets.'),
+('Sports', 'Covers football, basketball, cricket, and other sports news.'),
+('Entertainment', 'Movies, TV shows, celebrities, and music industry updates.'),
+('Business', 'Financial markets, startups, and economic trends.'),
+('Science', 'Discoveries, research, and space exploration.'),
+('Health', 'Medical advancements, wellness, and fitness tips.'),
+('World', 'International news and global affairs.'),
+('Lifestyle', 'Travel, food, fashion, and personal development.'),
+('Education', 'Updates on schools, universities, and learning trends.');
+
+SELECT 'Categories imported successfully' as message;
+
+
+INSERT INTO article_category (article_id, category_id) VALUES
+(1, 1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(6,6),
+(7,7),
+(8,8),
+(9,9);
+
+SELECT 'Article categories added successfully' as message;
+
