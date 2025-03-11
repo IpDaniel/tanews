@@ -1,38 +1,75 @@
 .search-container {
   display: flex;
-  justify-content: center; /* Centers horizontally */
+  justify-content: center;
   align-items: center;
-  width: 100%;
-  padding: 20px 0;
-  background-color: white; /* Adjust as needed */
+  width: 70%;
+  margin-left: 350px;
+  padding: 30px 0;
+  background-color: transparent;
+  position: relative;
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  width: 500px; /* Adjust to match Figma design */
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  overflow: hidden;
+  width: 100%;
+  border: 2px solid #4b5ae4;
+  border-radius: 30px;
+  overflow: visible;
   background-color: white;
+  box-shadow: 0 4px 12px rgba(75, 90, 228, 0.1);
+  transition: all 0.3s ease;
+}
+
+.search-box:hover, 
+.search-box:focus-within {
+  box-shadow: 0 6px 16px rgba(75, 90, 228, 0.2);
+  transform: translateY(-2px);
 }
 
 .search-input {
   flex: 1;
   border: none;
-  padding: 12px 15px;
+  padding: 15px 20px;
   font-size: 16px;
   outline: none;
+  color: #333;
+  background: transparent;
+  border-radius: 30px;
+  width: 100%;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-weight: 400;
 }
 
 .filter-btn {
-  background: none;
+  position: absolute;
+  right: -45px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #4b5ae4;
   border: none;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  box-shadow: 0 4px 12px rgba(75, 90, 228, 0.1);
+}
+
+.filter-btn:hover {
+  background: #3a48b5;
+  transform: translateY(-50%) scale(1.05);
 }
 
 .filter-btn img {
-  width: 20px; /* Adjust size based on Figma */
+  width: 20px;
   height: 20px;
+  filter: brightness(0) invert(1);
 }
