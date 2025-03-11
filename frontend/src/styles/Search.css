@@ -28,15 +28,22 @@
 }
 
 .search-input {
-  flex: 1;
-  border: none;
-  padding: 15px 20px;
-  font-size: 16px;
-  outline: none;
-  color: #333;
-  background: transparent;
-  border-radius: 30px;
-  width: 100%;
+  width: 100% !important;
+}
+
+.search-input .p-autocomplete {
+  width: 100% !important;
+}
+
+.search-input input {
+  width: 100% !important;
+  border: none !important;
+  padding: 15px 20px !important;
+  font-size: 16px !important;
+  outline: none !important;
+  color: #333 !important;
+  background: transparent !important;
+  border-radius: 30px !important;
 }
 
 .search-input::placeholder {

@@ -3,7 +3,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 280px;
+  width: 300px;
   height: 100vh;
   background: #1e1e2f;
   color: white;
@@ -16,6 +16,9 @@
   justify-content: space-between;
   padding-top: 100px;
   overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  z-index: 1000;
 }
 
 .sidebar.open {
@@ -25,7 +28,9 @@
 .sidebar-content {
   flex-grow: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-right: 10px;
+  width: 100%;
 }
 
 h2 {
@@ -38,6 +43,8 @@ h2 {
 /* Stock Section */
 .stock-section {
   margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .stock-section h3 {
@@ -58,6 +65,8 @@ h2 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   font-size: 18px;
   font-weight: 600;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Stock Grid */
@@ -97,7 +106,7 @@ h2 {
 /* Toggle Button */
 .toggle-button {
   position: absolute;
-  left: 105%;
+  left: 310px;
   top: 50%;
   transform: translateY(-50%);
   background: #444;
@@ -108,6 +117,7 @@ h2 {
   cursor: pointer;
   border-radius: 5px;
   transition: 0.3s;
+  z-index: 999;
 }
 a {
   color: white;
@@ -122,6 +132,7 @@ a {
   background-color: #333;
   border-radius: 8px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .weather-section h2 {
