@@ -21,7 +21,7 @@ def get_articles():
             a.read_time,
             a.head_url, 
             a.publish_date,
-            COALESCE(u.user_id, -1) AS user_id,  -- Default user_id if no author
+            COALESCE(u.user_id, -1) AS user_id,
             COALESCE(u.name, 'No author set') AS author_name,
             COALESCE(c.name, 'No category set') AS category
         FROM TaNewsDB.articles a
@@ -108,3 +108,32 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
 
     except Exception as e: 
         return jsonify({'error': str(e)}), 500
+
+@articles.route('/<int:id>', methods=['GET'])
+def get_article_by_id(id):
+    cursor = db.get_db().cursor()
+    query = """
+        SELECT
+            a.article_id,
+            a.title,
+            a.text,
+            a.read_time,
+            a.head_url, 
+            a.publish_date,
+            COALESCE(u.user_id, -1) AS user_id,
+            COALESCE(u.name, 'No author set') AS author_name,
+            COALESCE(c.name, 'No category set') AS category
+        FROM TaNewsDB.articles a
+        LEFT JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
+        LEFT JOIN TaNewsDB.users u ON aa.user_id = u.user_id
+        LEFT JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
+        LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id
+        WHERE a.article_id = %s
+    """
+    cursor.execute(query, (id,))
+    article = cursor.fetchone()
+    cursor.close()
+    
+    if article:
+        return jsonify({'article': article})
+    return jsonify({'error': 'Article not found'}), 404

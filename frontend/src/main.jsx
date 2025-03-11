@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/authorized/add-article", element: <AdminAddArticle /> },
-  { path: "/article", element: <ArticlePage /> },
+  { path: "/article/:id", element: <ArticlePage /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
