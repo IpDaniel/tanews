@@ -15,6 +15,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding-top: 100px;
+  overflow-y: auto;
 }
 
 .sidebar.open {
@@ -23,6 +24,8 @@
 
 .sidebar-content {
   flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
 h2 {
@@ -111,21 +114,56 @@ a {
 }
 
 .weather-section {
-  margin-top: 20px;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
   background-color: #333;
-  color: white;
   border-radius: 8px;
+  width: 100%;
 }
 
-.weather-section h3 {
+.weather-section h2 {
   margin-bottom: 10px;
   font-size: 1.2rem;
 }
 
+/* Adjust weather widget container to fit sidebar */
 .weather-widget {
+  width: 100% !important; /* Override the fixed width */
+  max-width: 240px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+}
+
+.weather-widget h3.weather {
+  width: 100%;
+  text-align: center;
+}
+
+.weather-widget img {
+  width: 80px;
+  height: 80px;
+  margin: 10px auto;
+}
+
+/* Custom scrollbar styling */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #1e1e2f;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
