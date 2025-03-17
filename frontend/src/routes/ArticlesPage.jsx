@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import TopNav from "../components/TopNav.jsx";
+import SideBar from "../components/Sidebar.jsx";
 import "../styles/ArticlesPage.css";
 
 const ArticlesPage = () => {
@@ -44,6 +45,7 @@ const ArticlesPage = () => {
   if (loading) {
     return (
       <>
+        <SideBar />
         <TopNav />
         <div className="article-page-container">
           <p>Loading article...</p>
@@ -55,6 +57,7 @@ const ArticlesPage = () => {
   if (error) {
     return (
       <>
+        <SideBar />
         <TopNav />
         <div className="article-page-container">
           <p className="error-message">Error: {error}</p>
@@ -66,6 +69,7 @@ const ArticlesPage = () => {
 
   return (
     <>
+      <SideBar />
       <TopNav />
       <div className="article-page-container">
         {article && (
