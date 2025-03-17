@@ -8,6 +8,7 @@ const AdminAddArticle = () => {
   const [error, setError] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [headURL, setHeadURL] = useState("");
   const [minutesRead, setMinutesRead] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const AdminAddArticle = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const articleData = { title, category, minutesRead, content };
+    const articleData = { title, category, headURL, minutesRead, content };
 
     try {
       const token = localStorage.getItem("token");
@@ -60,6 +61,7 @@ const AdminAddArticle = () => {
       if (response.ok) {
         alert("Article added successfully!");
         setTitle("");
+        setHeadURL("");
         setCategory("");
         setMinutesRead("");
         setContent("");
@@ -98,8 +100,8 @@ const AdminAddArticle = () => {
             <label>Head URL:</label>
             <input
               type="text"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={headURL}
+              onChange={(e) => setHeadURL(e.target.value)}
               required
             />
 

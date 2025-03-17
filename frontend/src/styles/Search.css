@@ -21,29 +21,23 @@
   transition: all 0.3s ease;
 }
 
-.search-box:hover, 
-.search-box:focus-within {
-  box-shadow: 0 6px 16px rgba(75, 90, 228, 0.2);
-  transform: translateY(-2px);
-}
-
 .search-input {
-  width: 100% !important;
+  width: 100% ;
 }
 
 .search-input .p-autocomplete {
-  width: 100% !important;
+  width: 100% ;
 }
 
 .search-input input {
-  width: 100% !important;
-  border: none !important;
-  padding: 15px 20px !important;
-  font-size: 16px !important;
-  outline: none !important;
-  color: #333 !important;
-  background: transparent !important;
-  border-radius: 30px !important;
+  width: 100% ;
+  border: none ;
+  padding: 15px 20px ;
+  font-size: 16px ;
+  outline: none ;
+  color: #333 ;
+  background: transparent ;
+  border-radius: 30px ;
 }
 
 .search-input::placeholder {
