@@ -86,7 +86,7 @@ def create_user():
             VALUES (%s, %s, %s, %s, %s, %s)
         """
         # we do NOT store blank passwords in the db. we hash it first. I changed the cursor.execute to include the hashed_password instead of just the password. 
-        cursor.execute(query, (name, email, password, is_admin, is_author, image_url))
+        cursor.execute(query, (name, email, hashed_password, is_admin, is_author, image_url))
         db.get_db().commit()
 
         new_user_id = cursor.lastrowid
@@ -118,9 +118,10 @@ def login():
         if not user:
             return jsonify({'error': 'Invalid email or password'}), 401
 
-        # Verify hashed password HASHING STUFF, WORRY ABOUT THIS LATER
+        # Verify hashed password HASHING STUFF, WORRY ABOUT THIS LATER -- Enabled this - Aditya
         # if not check_password_hash(user['password'], password):
         #     return jsonify({'error': 'Invalid email or password'}), 401
+        
         
         if password != user['password']: 
             return jsonify({'error': 'Invalid email or password'}), 401
@@ -164,10 +165,9 @@ def protected():
 @jwt_required()
 def is_admin(): 
     try: 
-        user_id = get_jwt_identity()
 
-        # Ensure user_id is an integer
-        user_id = int(user_id)
+        user_id = int(get_jwt_identity())  # Ensure it's an integer
+
 
         # ✅ Corrected cursor initialization
         cursor = db.get_db().cursor()

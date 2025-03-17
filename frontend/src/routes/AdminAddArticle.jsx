@@ -7,8 +7,12 @@ const AdminAddArticle = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [minutesRead, setMinutesRead] = useState("");
+  const [headline, setHeadline] = useState("");
+  const [readTime, setReadTime] = useState("");
+  const [publishDate, setPublishDate] = useState("");
+  const [publishAuthors, setPublishAuthors] = useState("");
+  const [categories, setCategories] = useState("");
+  const [headURL, setURL] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
@@ -44,7 +48,16 @@ const AdminAddArticle = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const articleData = { title, category, minutesRead, content };
+    const articleData = {
+      title,
+      headline,
+      readTime,
+      publishDate,
+      publishAuthors,
+      categories,
+      headURL,
+      content,
+    };
 
     try {
       const token = localStorage.getItem("token");
@@ -60,8 +73,12 @@ const AdminAddArticle = () => {
       if (response.ok) {
         alert("Article added successfully!");
         setTitle("");
-        setCategory("");
-        setMinutesRead("");
+        setHeadline("");
+        setReadTime("");
+        setPublishDate("");
+        setPublishAuthors("");
+        setCategories("");
+        setURL("");
         setContent("");
       } else {
         const data = await response.json();
@@ -87,27 +104,51 @@ const AdminAddArticle = () => {
               required
             />
 
-            <label>Category:</label>
+            <label>Headline:</label>
             <input
               type="text"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={headline}
+              onChange={(e) => setHeadline(e.target.value)}
+              required
+            />
+
+            <label>Read Time (minutes):</label>
+            <input
+              type="number"
+              value={readTime}
+              onChange={(e) => setReadTime(e.target.value)}
+              required
+            />
+
+            <label>Publish Date:</label>
+            <input
+              type="date"
+              value={publishDate}
+              onChange={(e) => setPublishDate(e.target.value)}
+              required
+            />
+
+            <label>Publish Authors (comma-separated):</label>
+            <input
+              type="text"
+              value={publishAuthors}
+              onChange={(e) => setPublishAuthors(e.target.value)}
+              required
+            />
+
+            <label>Categories (comma-separated):</label>
+            <input
+              type="text"
+              value={categories}
+              onChange={(e) => setCategories(e.target.value)}
               required
             />
 
             <label>Head URL:</label>
             <input
               type="text"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              required
-            />
-
-            <label>Minutes Read:</label>
-            <input
-              type="number"
-              value={minutesRead}
-              onChange={(e) => setMinutesRead(e.target.value)}
+              value={headURL}
+              onChange={(e) => setURL(e.target.value)}
               required
             />
 

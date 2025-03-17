@@ -47,24 +47,38 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         
         
         # have to add to authors table, categories table, and articles table. 
-        user_id = get_jwt_identity();
+        user_id = get_jwt_identity()
         
         # have a check for if the person is an admin => 
+
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT is_admin FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+
             # if fase return 500 status
+        if not user or not user["is_admin"]:
+            return jsonify({"error": "Unauthorized. Only admins can add articles."}), 500
+
         
         # if true
             # parse data from route. 
         
         data = request.get_json()
+
+        title = data.get("title")
+        headline = data.get("headline")
+        read_time = data.get("read_time")
+        publish_date = data.get("publish_date")
+        authors = data.get("authors")  # List of author IDs
+        categories = data.get("categories")  # List of category IDs
+        head_url = data.get("head_url")
+        text = data.get("text")
         
         
         # current state of the schema, these are the required feilds. 
         #required_fields = ['text', 'title', 'read_time', 'publish_date']
         
-        title = data.get('title')
-        text = data.get('text')
-        read_time = data.get('read_time')
-        publish_date = data.get('publish_date')
+
         
         if not all([title, text, read_time, publish_date]):# if any required feilds are null
             return jsonify({'error': 'Missing required fields'}), 400
