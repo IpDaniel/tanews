@@ -64,7 +64,7 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         # have a check for if the person is an admin => 
 
         cursor = db.get_db().cursor()
-        cursor.execute("SELECT is_admin FROM users WHERE id = %s", (user_id,))
+        cursor.execute("SELECT is_admin FROM users WHERE user_id = %s", (user_id,))
         user = cursor.fetchone()
 
             # if fase return 500 status
@@ -89,16 +89,17 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         
         # current state of the schema, these are the required feilds. 
         #required_fields = ['text', 'title', 'read_time', 'publish_date']
+        # ADITYA - made headurl required for now
         
 
         
-        if not all([title, text, read_time, publish_date]):# if any required feilds are null
+        if not all([title, text, read_time, publish_date, head_url]):# if any required feilds are null
             return jsonify({'error': 'Missing required fields'}), 400
         
             
         cursor = db.get_db().cursor()
-        query = "INSERT INTO articles (title, text, read_time, publish_date) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (title, text, read_time, publish_date))
+        query = "INSERT INTO articles (title, text, read_time, publish_date, head_url) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(query, (title, text, read_time, publish_date, head_url))
         db.get_db().commit()
         
         new_article_id = cursor.lastrowid
