@@ -36,6 +36,18 @@ def get_articles():
     return jsonify({'articles': articles})
 
 
+# route to return all article categories
+@articles.route('/categories', methods=['GET'])
+def get_categories():
+    cursor = db.get_db().cursor()
+    query = 'SELECT name FROM TaNewsDB.categories ORDER BY name DESC'
+    cursor.execute(query)
+    categories = cursor.fetchall()
+    cursor.close()
+    return jsonify({'categories': categories})
+
+
+
 
 
 # not secured yet. habe to add jwt_required() 
@@ -82,6 +94,7 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         
         if not all([title, text, read_time, publish_date]):# if any required feilds are null
             return jsonify({'error': 'Missing required fields'}), 400
+        
             
         cursor = db.get_db().cursor()
         query = "INSERT INTO articles (title, text, read_time, publish_date) VALUES (%s, %s, %s, %s)"

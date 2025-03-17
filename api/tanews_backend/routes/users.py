@@ -17,6 +17,27 @@ def get_users():
     cursor.close()
     return jsonify({'users': users}), 200
 
+# # basic GET command to see all authors
+@users.route('/authors', methods=['GET'])
+def get_authors():
+    try:
+        cursor = db.get_db().cursor()
+
+        # Only select the necessary fields (e.g., id, name, email)
+        cursor.execute("SELECT user_id, name, email FROM users WHERE is_author = 1 ORDER BY name DESC")
+        authors = cursor.fetchall()
+
+        cursor.close()
+
+        if authors:
+            return jsonify({'authors': authors}), 200
+        else:
+            return jsonify({'message': 'No authors found.'}), 404
+
+    except Exception as e:
+        # Log the error or handle it as necessary
+        return jsonify({'error': str(e)}), 500
+
 
 # get command to get a user by ID
 @users.route('/<int:id>', methods=['GET'])
@@ -132,7 +153,6 @@ def login():
         print(f"DEBUG - JWT Identity: {user['user_id']} (Type: {type(user['user_id'])})")
         # Generate JWT token
         access_token = create_access_token(identity=str(user['user_id']), expires_delta=timedelta(hours=2))
-
         
         return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
 
