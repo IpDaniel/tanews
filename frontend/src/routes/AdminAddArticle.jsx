@@ -125,6 +125,7 @@ const AdminAddArticle = () => {
     <>
       <TopNav />
       <div className="add-article-container">
+        <h2>Add New Article</h2>
         {error && <p className="error-message-admin">{error}</p>}
         {user ? (
           <form className="add-article-form" onSubmit={handleSubmit}>
