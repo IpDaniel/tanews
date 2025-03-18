@@ -80,6 +80,9 @@ const AdminAddArticle = () => {
       content,
     };
 
+    console.log("Submitting article data:", articleData); // Log data before sending
+
+
     try {
       const token = localStorage.getItem("token");
       const response = await fetch("http://localhost:4000/api/articles", {
@@ -133,13 +136,13 @@ const AdminAddArticle = () => {
               required
             />
 
-            <label>Headline:</label>
+            {/* <label>Headline:</label>
             <input
               type="text"
               value={headline}
               onChange={(e) => setHeadline(e.target.value)}
               required
-            />
+            /> */}
 
             <label>Read Time (minutes):</label>
             <input
@@ -161,13 +164,13 @@ const AdminAddArticle = () => {
             <select multiple value={selectedAuthors} onChange={handleAuthorChange} required>
               {authors.map((author) => (
                 <option key={author._id} value={author._id}>
-                  {author.name} - {author.email}
+                  {author.name}
                 </option>
               ))}
             </select>
 
 
-            <label>Categories (comma-separated):</label>
+            <label>Categories:</label>
             <input
               type="text"
               value={categories}

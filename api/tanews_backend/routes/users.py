@@ -24,7 +24,8 @@ def get_authors():
         cursor = db.get_db().cursor()
 
         # Only select the necessary fields (e.g., id, name, email)
-        cursor.execute("SELECT user_id, name, email FROM users WHERE is_author = 1 ORDER BY name DESC")
+        # cursor.execute("SELECT user_id, name, email FROM users WHERE is_author = 1 ORDER BY name DESC")
+        cursor.execute("SELECT user_id, name FROM users WHERE is_author = 1 ORDER BY name DESC")
         authors = cursor.fetchall()
 
         cursor.close()

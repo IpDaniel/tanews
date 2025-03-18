@@ -104,7 +104,6 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         data = request.get_json()
 
         title = data.get("title")
-        headline = data.get("headline")
         read_time = data.get("read_time")
         publish_date = data.get("publish_date")
         authors = data.get("authors")  # List of author IDs
@@ -119,7 +118,7 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         
 
         
-        if not all([title, text, read_time, publish_date, head_url]):# if any required feilds are null
+        if not all([title, text, read_time, publish_date, head_url, authors]):# if any required feilds are null
             return jsonify({'error': 'Missing required fields'}), 400
         
             
@@ -150,12 +149,20 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         cursor.execute(query, (new_article_id, category_id))
 
         db.get_db().commit()
+        
 
-        # # add article authors
+        # add article authors
+        # get user id from author name
+        query = 'SELECT user_id FROM users where name = %s'
+        cursor.execute(query, (authors,))
+        user_id = cursor.fetchone()
+        user_id = user_id.get('user_id')
 
         # current implementation - WORK ONLY FOR A SINGLE AUTHOR
-        # query = 'SELECT user_id FROM categories WHERE name = %s'
-        # cursor.execute(query, (authors, category_id))
+        query = 'INSERT INTO TaNewsDB.article_authors (user_id, article_id) VALUES (%s, %s)'
+        cursor.execute(query, (user_id, new_article_id,))
+        db.get_db().commit()
+
         cursor.close()
         return jsonify({'message': 'Article added successfully', 'article_id': new_article_id}), 201
 
