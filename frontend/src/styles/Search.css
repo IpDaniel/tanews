@@ -38,6 +38,7 @@
   color: #333 ;
   background: transparent ;
   border-radius: 30px ;
+  margin-bottom: -1px;
 }
 
 .search-input::placeholder {
