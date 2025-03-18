@@ -7,9 +7,13 @@ const AdminAddArticle = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [headURL, setHeadURL] = useState("");
-  const [minutesRead, setMinutesRead] = useState("");
+  const [headline, setHeadline] = useState("");
+  const [readTime, setReadTime] = useState("");
+  const [publishDate, setPublishDate] = useState("");
+  const [authors, setAuthors] = useState([]); // State to hold authors data
+  const [selectedAuthors, setSelectedAuthors] = useState([]); // State for selected author
+  const [categories, setCategories] = useState("");
+  const [headURL, setURL] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
@@ -40,12 +44,44 @@ const AdminAddArticle = () => {
       }
     };
 
+    const fetchAuthors = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/users/authors", {
+          method: "GET",
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+          setAuthors(data.authors);
+        } else {
+          setError("Failed to load authors.");
+        }
+      }
+      catch (err) {
+        setError(err.message);
+      }
+    }
+
+
     fetchUserData();
+    fetchAuthors();
   }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const articleData = { title, category, headURL, minutesRead, content };
+    const articleData = {
+      title,
+      headline,
+      readTime,
+      publishDate,
+      authors: selectedAuthors,
+      categories,
+      headURL,
+      content,
+    };
+
+    console.log("Submitting article data:", articleData); // Log data before sending
+
 
     try {
       const token = localStorage.getItem("token");
@@ -61,10 +97,15 @@ const AdminAddArticle = () => {
       if (response.ok) {
         alert("Article added successfully!");
         setTitle("");
-        setHeadURL("");
-        setCategory("");
-        setMinutesRead("");
+        setHeadline("");
+        setReadTime("");
+        setPublishDate("");
+        // setAuthors("");
+        setCategories("");
+        setURL("");
         setContent("");
+        setSelectedAuthors([]); // Reset selected authors
+
       } else {
         const data = await response.json();
         setError(data.message || "Failed to add article.");
@@ -73,6 +114,12 @@ const AdminAddArticle = () => {
       setError(err.message);
     }
   };
+
+  const handleAuthorChange = (e) => {
+    const selected = Array.from(e.target.selectedOptions, (option) => option.value);
+    setSelectedAuthors(selected);
+  };
+
 
   return (
     <>
@@ -89,11 +136,45 @@ const AdminAddArticle = () => {
               required
             />
 
-            <label>Category:</label>
+            {/* <label>Headline:</label>
             <input
               type="text"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={headline}
+              onChange={(e) => setHeadline(e.target.value)}
+              required
+            /> */}
+
+            <label>Read Time (minutes):</label>
+            <input
+              type="number"
+              value={readTime}
+              onChange={(e) => setReadTime(e.target.value)}
+              required
+            />
+
+            <label>Publish Date:</label>
+            <input
+              type="date"
+              value={publishDate}
+              onChange={(e) => setPublishDate(e.target.value)}
+              required
+            />
+
+            <label>Authors:</label>
+            <select multiple value={selectedAuthors} onChange={handleAuthorChange} required>
+              {authors.map((author) => (
+                <option key={author._id} value={author._id}>
+                  {author.name}
+                </option>
+              ))}
+            </select>
+
+
+            <label>Categories:</label>
+            <input
+              type="text"
+              value={categories}
+              onChange={(e) => setCategories(e.target.value)}
               required
             />
 
@@ -101,15 +182,7 @@ const AdminAddArticle = () => {
             <input
               type="text"
               value={headURL}
-              onChange={(e) => setHeadURL(e.target.value)}
-              required
-            />
-
-            <label>Minutes Read:</label>
-            <input
-              type="number"
-              value={minutesRead}
-              onChange={(e) => setMinutesRead(e.target.value)}
+              onChange={(e) => setURL(e.target.value)}
               required
             />
 

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import requests
 from db_connection import db
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -36,6 +37,43 @@ def get_articles():
     return jsonify({'articles': articles})
 
 
+# route to return all article categories
+@articles.route('/categories', methods=['GET'])
+def get_categories():
+    cursor = db.get_db().cursor()
+    query = 'SELECT name FROM TaNewsDB.categories ORDER BY name DESC'
+    cursor.execute(query)
+    categories = cursor.fetchall()
+    cursor.close()
+    return jsonify({'categories': categories})
+
+
+# route to create a category
+# @articles.route('/categories', methods=['POST'])
+# def add_category():
+#     cursor = db.get_db.cursor()
+#     data = request.get_json()
+
+
+# route to get a category id
+@articles.route('/categories/<string:category>', methods=['GET'])
+def get_article_id(category):
+    try:
+        cursor = db.get_db().cursor()
+        query = 'SELECT category_id FROM categories WHERE name = %s'
+        cursor.execute(query, (category,))
+        category_data = cursor.fetchone()
+
+        if category_data:
+            category_id = category_data.get('category_id')
+        else:
+            return jsonify({"error": f"Category '{category}' not found"}), 404
+        return jsonify({"category_id": category_id}), 200
+    except Exception as e:
+        return jsonify({"error": f"An error occurred with category '{category}': {str(e)}"}), 500
+    finally:
+        if cursor:
+            cursor.close()
 
 
 # not secured yet. habe to add jwt_required() 
@@ -47,34 +85,84 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         
         
         # have to add to authors table, categories table, and articles table. 
-        user_id = get_jwt_identity();
+        user_id = get_jwt_identity()
         
         # have a check for if the person is an admin => 
+
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT is_admin FROM users WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+
             # if fase return 500 status
+        if not user or not user["is_admin"]:
+            return jsonify({"error": "Unauthorized. Only admins can add articles."}), 500
+
         
         # if true
             # parse data from route. 
         
         data = request.get_json()
+
+        title = data.get("title")
+        read_time = data.get("read_time")
+        publish_date = data.get("publish_date")
+        authors = data.get("authors")  # List of author IDs
+        categories = data.get("categories")  # List of category IDs
+        head_url = data.get("head_url")
+        text = data.get("text")
         
         
         # current state of the schema, these are the required feilds. 
         #required_fields = ['text', 'title', 'read_time', 'publish_date']
+        # ADITYA - made headurl required for now
         
-        title = data.get('title')
-        text = data.get('text')
-        read_time = data.get('read_time')
-        publish_date = data.get('publish_date')
+
         
-        if not all([title, text, read_time, publish_date]):# if any required feilds are null
+        if not all([title, text, read_time, publish_date, head_url, authors]):# if any required feilds are null
             return jsonify({'error': 'Missing required fields'}), 400
+        
             
         cursor = db.get_db().cursor()
-        query = "INSERT INTO articles (title, text, read_time, publish_date) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (title, text, read_time, publish_date))
+        query = "INSERT INTO articles (title, text, read_time, publish_date, head_url) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(query, (title, text, read_time, publish_date, head_url))
         db.get_db().commit()
         
         new_article_id = cursor.lastrowid
+
+        # add an article category if present
+
+        # current_categories = requests.get("http://localhost:4000/api/articles/categories")
+        # if current_categories.status_code != 200:
+        #     return jsonify({'error':"failed to fetch categories"}), 500
+        
+        # current_categories = current_categories.json()
+        # existing_categories = [category['name'].lower() for category in current_categories['categories']] # put the categories in an array
+        # categories_to_create = [category for category in categories if category not in existing_categories] # these are the categories that we must create
+
+        # CURRENT IMPLEMENTATION - only add 1 category that exists
+        query = 'SELECT category_id FROM categories WHERE name = %s'
+        cursor.execute(query, (categories,))
+        category_id = cursor.fetchone()
+        category_id = category_id.get('category_id')
+
+        query = "INSERT INTO TaNewsDB.article_category (article_id, category_id) VALUES (%s, %s)"
+        cursor.execute(query, (new_article_id, category_id))
+
+        db.get_db().commit()
+        
+
+        # add article authors
+        # get user id from author name
+        query = 'SELECT user_id FROM users where name = %s'
+        cursor.execute(query, (authors,))
+        user_id = cursor.fetchone()
+        user_id = user_id.get('user_id')
+
+        # current implementation - WORK ONLY FOR A SINGLE AUTHOR
+        query = 'INSERT INTO TaNewsDB.article_authors (user_id, article_id) VALUES (%s, %s)'
+        cursor.execute(query, (user_id, new_article_id,))
+        db.get_db().commit()
+
         cursor.close()
         return jsonify({'message': 'Article added successfully', 'article_id': new_article_id}), 201
 

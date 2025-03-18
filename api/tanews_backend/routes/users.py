@@ -17,6 +17,28 @@ def get_users():
     cursor.close()
     return jsonify({'users': users}), 200
 
+# # basic GET command to see all authors
+@users.route('/authors', methods=['GET'])
+def get_authors():
+    try:
+        cursor = db.get_db().cursor()
+
+        # Only select the necessary fields (e.g., id, name, email)
+        # cursor.execute("SELECT user_id, name, email FROM users WHERE is_author = 1 ORDER BY name DESC")
+        cursor.execute("SELECT user_id, name FROM users WHERE is_author = 1 ORDER BY name DESC")
+        authors = cursor.fetchall()
+
+        cursor.close()
+
+        if authors:
+            return jsonify({'authors': authors}), 200
+        else:
+            return jsonify({'message': 'No authors found.'}), 404
+
+    except Exception as e:
+        # Log the error or handle it as necessary
+        return jsonify({'error': str(e)}), 500
+
 
 # get command to get a user by ID
 @users.route('/<int:id>', methods=['GET'])
@@ -86,7 +108,7 @@ def create_user():
             VALUES (%s, %s, %s, %s, %s, %s)
         """
         # we do NOT store blank passwords in the db. we hash it first. I changed the cursor.execute to include the hashed_password instead of just the password. 
-        cursor.execute(query, (name, email, password, is_admin, is_author, image_url))
+        cursor.execute(query, (name, email, hashed_password, is_admin, is_author, image_url))
         db.get_db().commit()
 
         new_user_id = cursor.lastrowid
@@ -118,9 +140,10 @@ def login():
         if not user:
             return jsonify({'error': 'Invalid email or password'}), 401
 
-        # Verify hashed password HASHING STUFF, WORRY ABOUT THIS LATER
+        # Verify hashed password HASHING STUFF, WORRY ABOUT THIS LATER -- Enabled this - Aditya
         # if not check_password_hash(user['password'], password):
         #     return jsonify({'error': 'Invalid email or password'}), 401
+        
         
         if password != user['password']: 
             return jsonify({'error': 'Invalid email or password'}), 401
@@ -131,7 +154,6 @@ def login():
         print(f"DEBUG - JWT Identity: {user['user_id']} (Type: {type(user['user_id'])})")
         # Generate JWT token
         access_token = create_access_token(identity=str(user['user_id']), expires_delta=timedelta(hours=2))
-
         
         return jsonify({'message': 'Login successful', 'access_token': access_token}), 200
 
@@ -164,10 +186,9 @@ def protected():
 @jwt_required()
 def is_admin(): 
     try: 
-        user_id = get_jwt_identity()
 
-        # Ensure user_id is an integer
-        user_id = int(user_id)
+        user_id = int(get_jwt_identity())  # Ensure it's an integer
+
 
         # ✅ Corrected cursor initialization
         cursor = db.get_db().cursor()
