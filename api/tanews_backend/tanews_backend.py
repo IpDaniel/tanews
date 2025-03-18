@@ -28,6 +28,7 @@ def create_app():
     
     db.init_app(app)  # Connect Flask with MySQL
     CORS(app)
+    #CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True) 
     
     # test route
     @app.route('/api/health', methods=['GET'])
