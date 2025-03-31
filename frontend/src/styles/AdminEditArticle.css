@@ -1,0 +1,105 @@
+.add-article-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-article-container h2 {
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.add-article-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.add-article-form label {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.add-article-form input,
+.add-article-form select,
+.add-article-form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.add-article-form input:focus,
+.add-article-form select:focus,
+.add-article-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.add-article-form textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.add-article-form select[multiple] {
+  height: 150px;
+}
+
+.add-article-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+}
+
+.add-article-form button:hover {
+  background-color: #0056b3;
+}
+
+.error-message-admin {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .add-article-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .add-article-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .add-article-form input,
+  .add-article-form select,
+  .add-article-form textarea {
+    padding: 0.6rem;
+  }
+}
+
+/* Loading State */
+.add-article-container p {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+}

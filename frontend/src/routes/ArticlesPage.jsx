@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import TopNav from "../components/TopNav.jsx";
 import SideBar from "../components/Sidebar.jsx";
 import "../styles/ArticlesPage.css";
@@ -8,8 +8,29 @@ const ArticlesPage = () => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const response = await fetch("http://localhost:4000/api/users/isadmin", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        setIsAdmin(response.ok);
+      } catch (err) {
+        console.error("Error checking admin status:", err);
+      }
+    };
+
+    checkAdminStatus();
+  }, []);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -74,6 +95,13 @@ const ArticlesPage = () => {
       <div className="article-page-container">
         {article && (
           <article className="article-content">
+            {isAdmin && (
+              <div className="article-admin-controls">
+                <Link to={`/authorized/edit-article/${id}`} className="edit-button">
+                  Edit Article
+                </Link>
+              </div>
+            )}
             {article.head_url && (
               <img 
                 src={article.head_url} 

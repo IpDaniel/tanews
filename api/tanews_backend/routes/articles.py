@@ -182,70 +182,75 @@ def get_article_by_id(id):
         return jsonify({'article': article})
     return jsonify({'error': 'Article not found'}), 404
 
-# Update an existing article
 @articles.route('/<int:id>', methods=['PUT'])
 @jwt_required()
 def update_article(id):
     try:
-        # Check if user is admin
         user_id = get_jwt_identity()
+        
+        # Check if user is admin
         cursor = db.get_db().cursor()
         cursor.execute("SELECT is_admin FROM users WHERE user_id = %s", (user_id,))
         user = cursor.fetchone()
-
+        
         if not user or not user["is_admin"]:
             return jsonify({"error": "Unauthorized. Only admins can update articles."}), 403
 
-        # Get request data
         data = request.get_json()
-        title = data.get("title")
-        read_time = data.get("read_time")
-        publish_date = data.get("publish_date")
-        category = data.get("category")
-        head_url = data.get("head_url")
-        text = data.get("text")
-
-        # Validate required fields
-        if not all([title, text, read_time, publish_date, head_url, category]):
-            return jsonify({'error': 'Missing required fields'}), 400
-
-        # Update article data
-        update_query = """
+        
+        # Update article
+        cursor.execute("""
             UPDATE TaNewsDB.articles 
-            SET title = %s, text = %s, read_time = %s, publish_date = %s, head_url = %s 
+            SET title = %s, read_time = %s, 
+                publish_date = %s, head_url = %s, text = %s
             WHERE article_id = %s
-        """
-        cursor.execute(update_query, (title, text, read_time, publish_date, head_url, id))
+        """, (
+            data['title'],
+            data['read_time'],
+            data['publish_date'],
+            data['head_url'],
+            data['text'],
+            id
+        ))
         
         # Update category
-        # First, get the category ID
-        cursor.execute("SELECT category_id FROM categories WHERE name = %s", (category,))
-        category_result = cursor.fetchone()
+        if 'category' in data:
+            # First get the category ID
+            cursor.execute("SELECT category_id FROM TaNewsDB.categories WHERE name = %s", (data['category'],))
+            category = cursor.fetchone()
+            
+            if category:
+                # Update the article_category table
+                cursor.execute("""
+                    UPDATE TaNewsDB.article_category 
+                    SET category_id = %s 
+                    WHERE article_id = %s
+                """, (category['category_id'], id))
         
-        if category_result:
-            category_id = category_result.get('category_id')
+        # Update authors
+        if 'authors' in data and data['authors']:
+            # First remove existing authors
+            cursor.execute("DELETE FROM TaNewsDB.article_authors WHERE article_id = %s", (id,))
             
-            # Check if article-category relationship exists
-            cursor.execute("SELECT * FROM article_category WHERE article_id = %s", (id,))
-            existing_category = cursor.fetchone()
+            # Get user_id from author name
+            query = 'SELECT user_id FROM users WHERE name = %s'
+            cursor.execute(query, (data['authors'],))
+            author = cursor.fetchone()
             
-            if existing_category:
-                # Update existing category relationship
-                cursor.execute(
-                    "UPDATE article_category SET category_id = %s WHERE article_id = %s", 
-                    (category_id, id)
-                )
-            else:
-                # Create new category relationship
-                cursor.execute(
-                    "INSERT INTO article_category (article_id, category_id) VALUES (%s, %s)",
-                    (id, category_id)
-                )
+            if author:
+                # Add the new author
+                cursor.execute("""
+                    INSERT INTO TaNewsDB.article_authors (article_id, user_id)
+                    VALUES (%s, %s)
+                """, (id, author['user_id']))
         
         db.get_db().commit()
-        cursor.close()
+        return jsonify({"message": "Article updated successfully"}), 200
         
-        return jsonify({'message': 'Article updated successfully'}), 200
-    
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        db.get_db().rollback()
+        print(f"Error updating article: {str(e)}")  # Add logging
+        return jsonify({"error": f"Failed to update article: {str(e)}"}), 500
+    finally:
+        if cursor:
+            cursor.close()
