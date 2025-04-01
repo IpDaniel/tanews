@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -27,10 +27,9 @@ def create_app():
     jwt = JWTManager(app)  # Initialize JWT
     
     db.init_app(app)  # Connect Flask with MySQL
-    CORS(app)
-    #CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True) 
+    # CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
     
-    # test route
     @app.route('/api/health', methods=['GET'])
     def test():
         return jsonify({'message': 'TaNews API is running!'})

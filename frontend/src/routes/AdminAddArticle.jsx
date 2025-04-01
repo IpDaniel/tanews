@@ -71,13 +71,12 @@ const AdminAddArticle = () => {
     e.preventDefault();
     const articleData = {
       title,
-      headline,
-      readTime,
-      publishDate,
+      read_time: readTime, // Convert to snake_case
+      publish_date: publishDate, // Convert to snake_case
       authors: selectedAuthors,
       categories,
-      headURL,
-      content,
+      head_url: headURL, // Convert to snake_case
+      text: content, // Backend expects `text` instead of `content`
     };
 
     console.log("Submitting article data:", articleData); // Log data before sending
@@ -85,7 +84,8 @@ const AdminAddArticle = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:4000/api/articles", {
+      console.log("Token being sent:", token);
+      const response = await fetch("http://localhost:4000/api/articles/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -161,10 +161,11 @@ const AdminAddArticle = () => {
               required
             />
 
+
             <label>Authors:</label>
             <select multiple value={selectedAuthors} onChange={handleAuthorChange} required>
               {authors.map((author) => (
-                <option key={author._id} value={author._id}>
+                <option key={author.user_id} value={author.user_id}>
                   {author.name}
                 </option>
               ))}
@@ -205,3 +206,45 @@ const AdminAddArticle = () => {
 };
 
 export default AdminAddArticle;
+
+// import React, { useState } from "react";
+
+// const TestCorsPost = () => {
+//   const [response, setResponse] = useState("");
+//   const [error, setError] = useState("");
+
+//   const testCorsPostRequest = async () => {
+//     try {
+//       const payload = { message: "Hello from the frontend!" }; // Sample payload
+//       const response = await fetch("http://localhost:4000/api/test-cors-post", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json", // Ensure backend sees this header
+//         },
+//         body: JSON.stringify(payload), // Send JSON payload
+//       });
+
+//       if (!response.ok) {
+//         throw new Error(`Error: ${response.status} - ${response.statusText}`);
+//       }
+
+//       const data = await response.json();
+//       setResponse(data.response); // Set response message
+//       setError(""); // Clear any previous errors
+//     } catch (err) {
+//       setError(err.message);
+//       setResponse(""); // Clear previous responses
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h2>CORS POST Test</h2>
+//       <button onClick={testCorsPostRequest}>Test POST CORS</button>
+//       {response && <p style={{ color: "green" }}>{response}</p>}
+//       {error && <p style={{ color: "red" }}>{error}</p>}
+//     </div>
+//   );
+// };
+
+// export default TestCorsPost;

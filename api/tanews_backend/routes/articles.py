@@ -107,6 +107,7 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         read_time = data.get("read_time")
         publish_date = data.get("publish_date")
         authors = data.get("authors")  # List of author IDs
+        authors_id = authors[0]
         categories = data.get("categories")  # List of category IDs
         head_url = data.get("head_url")
         text = data.get("text")
@@ -153,14 +154,14 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
 
         # add article authors
         # get user id from author name
-        query = 'SELECT user_id FROM users where name = %s'
-        cursor.execute(query, (authors,))
-        user_id = cursor.fetchone()
-        user_id = user_id.get('user_id')
+        # query = 'SELECT user_id FROM users where name = %s'
+        # cursor.execute(query, (authors,))
+        # user_id = cursor.fetchone()
+        # user_id = user_id.get('user_id')
 
         # current implementation - WORK ONLY FOR A SINGLE AUTHOR
         query = 'INSERT INTO TaNewsDB.article_authors (user_id, article_id) VALUES (%s, %s)'
-        cursor.execute(query, (user_id, new_article_id,))
+        cursor.execute(query, (authors_id, new_article_id,))
         db.get_db().commit()
 
         cursor.close()
@@ -168,6 +169,8 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
 
     except Exception as e: 
         return jsonify({'error': str(e)}), 500
+
+
 
 @articles.route('/<int:id>', methods=['GET'])
 def get_article_by_id(id):
