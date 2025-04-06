@@ -7,9 +7,6 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 
 articles = Blueprint('articles', __name__)
 
-
-
-# gets all articles in the database. 
 # gets all articles in the database.
 @articles.route('/', methods=['GET'])
 def get_articles():
@@ -47,12 +44,6 @@ def get_categories():
     cursor.close()
     return jsonify({'categories': categories})
 
-
-# route to create a category
-# @articles.route('/categories', methods=['POST'])
-# def add_category():
-#     cursor = db.get_db.cursor()
-#     data = request.get_json()
 
 
 # route to get a category id
@@ -107,7 +98,7 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         read_time = data.get("read_time")
         publish_date = data.get("publish_date")
         authors = data.get("authors")  # List of author IDs
-        authors_id = authors[0]
+        num_authors = len(authors)
         categories = data.get("categories")  # List of category IDs
         head_url = data.get("head_url")
         text = data.get("text")
@@ -130,16 +121,8 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         
         new_article_id = cursor.lastrowid
 
-        # add an article category if present
 
-        # current_categories = requests.get("http://localhost:4000/api/articles/categories")
-        # if current_categories.status_code != 200:
-        #     return jsonify({'error':"failed to fetch categories"}), 500
         
-        # current_categories = current_categories.json()
-        # existing_categories = [category['name'].lower() for category in current_categories['categories']] # put the categories in an array
-        # categories_to_create = [category for category in categories if category not in existing_categories] # these are the categories that we must create
-
         # CURRENT IMPLEMENTATION - only add 1 category that exists
         query = 'SELECT category_id FROM categories WHERE name = %s'
         cursor.execute(query, (categories,))
@@ -153,16 +136,11 @@ def add_article(): # JSON object, title, headline, readtime, publish date, publi
         
 
         # add article authors
-        # get user id from author name
-        # query = 'SELECT user_id FROM users where name = %s'
-        # cursor.execute(query, (authors,))
-        # user_id = cursor.fetchone()
-        # user_id = user_id.get('user_id')
 
-        # current implementation - WORK ONLY FOR A SINGLE AUTHOR
-        query = 'INSERT INTO TaNewsDB.article_authors (user_id, article_id) VALUES (%s, %s)'
-        cursor.execute(query, (authors_id, new_article_id,))
-        db.get_db().commit()
+        for id in authors:
+            query = 'INSERT INTO TaNewsDB.article_authors (user_id, article_id) VALUES (%s, %s)'
+            cursor.execute(query, (id, new_article_id,))
+            db.get_db().commit()
 
         cursor.close()
         return jsonify({'message': 'Article added successfully', 'article_id': new_article_id}), 201
@@ -195,6 +173,7 @@ def get_article_by_id(id):
     """
     cursor.execute(query, (id,))
     article = cursor.fetchone()
+    # article = cursor.fetchall()
     cursor.close()
     
     if article:
