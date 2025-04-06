@@ -82,10 +82,9 @@ function SideBar({ isOpen, toggleSidebar }) {
               </div>
             </div>
 
-            <div className="weather-section">
-              <h2>Weather:</h2>
-              <WeatherWidget city="Boston" />
-            </div>
+          <div className="weather-section">
+            <h2>Weather:</h2>
+            <WeatherWidget city="Boston" />
           </div>
         </div>
       </div>
