@@ -23,6 +23,7 @@ function App() {
       <TopNav />
       <SideBar />
       <SearchBar articles={articles} />
+      <div className="edit-articles-container"></div>
       <div className="article-peeks">
         {articles.map((article, index) => (
           <ArticlePeek key={index} article={article} />
