@@ -34,6 +34,11 @@ const Login = () => {
     }
   };
 
+  const goToRegister = () => {
+    navigate("/register");
+  };
+
+
   return (
     <>
       <TopNav />
@@ -57,6 +62,10 @@ const Login = () => {
           />
           <button type="submit">Log In</button>
         </form>
+        <p className="dont-have-account">Don't have an account?</p>
+        <button onClick={goToRegister} className="register-button">
+          Register Here
+        </button>
       </div>
     </>
   );

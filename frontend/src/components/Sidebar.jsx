@@ -84,7 +84,7 @@ function SideBar() {
 
           <div className="weather-section">
             <h2>Weather:</h2>
-            <WeatherWidget city="Oakton" />
+            <WeatherWidget city="Boston" />
           </div>
         </div>
       </div>
