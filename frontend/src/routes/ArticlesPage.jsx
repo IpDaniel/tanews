@@ -90,7 +90,7 @@ const ArticlesPage = () => {
             </div>
             <h1 className="article-title">{article.title}</h1>
             <div className="article-author">
-              <span>By {article.author_name}</span>
+              <span>By {article.author_names}</span>
             </div>
             <div className="article-text">
               {article.text.split('\n').map((paragraph, index) => (

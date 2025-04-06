@@ -19,14 +19,15 @@ def get_articles():
             a.read_time,
             a.head_url, 
             a.publish_date,
-            COALESCE(u.user_id, -1) AS user_id,
-            COALESCE(u.name, 'No author set') AS author_name,
-            COALESCE(c.name, 'No category set') AS category
+            GROUP_CONCAT(DISTINCT COALESCE(u.user_id, -1)) AS user_ids,
+            GROUP_CONCAT(DISTINCT COALESCE(u.name, 'No author set') SEPARATOR ', ') AS author_names,
+            GROUP_CONCAT(DISTINCT COALESCE(c.name, 'No category set') SEPARATOR ', ') AS category
         FROM TaNewsDB.articles a
         LEFT JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
         LEFT JOIN TaNewsDB.users u ON aa.user_id = u.user_id
         LEFT JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
-        LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id;
+        LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id
+        GROUP BY a.article_id;
     """
     cursor.execute(query)
     articles = cursor.fetchall()
@@ -161,15 +162,16 @@ def get_article_by_id(id):
             a.read_time,
             a.head_url, 
             a.publish_date,
-            COALESCE(u.user_id, -1) AS user_id,
-            COALESCE(u.name, 'No author set') AS author_name,
-            COALESCE(c.name, 'No category set') AS category
+            GROUP_CONCAT(DISTINCT COALESCE(u.user_id, -1)) AS user_ids,
+            GROUP_CONCAT(DISTINCT COALESCE(u.name, 'No author set') SEPARATOR ', ') AS author_names,
+            GROUP_CONCAT(DISTINCT COALESCE(c.name, 'No category set') SEPARATOR ', ') AS category
         FROM TaNewsDB.articles a
         LEFT JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
         LEFT JOIN TaNewsDB.users u ON aa.user_id = u.user_id
         LEFT JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
         LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id
         WHERE a.article_id = %s
+        GROUP BY a.article_id;
     """
     cursor.execute(query, (id,))
     article = cursor.fetchone()
