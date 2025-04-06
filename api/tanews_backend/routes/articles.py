@@ -19,14 +19,15 @@ def get_articles():
             a.read_time,
             a.head_url, 
             a.publish_date,
-            COALESCE(u.user_id, -1) AS user_id,
-            COALESCE(u.name, 'No author set') AS author_name,
-            COALESCE(c.name, 'No category set') AS category
+            GROUP_CONCAT(DISTINCT COALESCE(u.user_id, -1)) AS user_ids,
+            GROUP_CONCAT(DISTINCT COALESCE(u.name, 'No author set') SEPARATOR ', ') AS author_names,
+            GROUP_CONCAT(DISTINCT COALESCE(c.name, 'No category set') SEPARATOR ', ') AS category
         FROM TaNewsDB.articles a
         LEFT JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
         LEFT JOIN TaNewsDB.users u ON aa.user_id = u.user_id
         LEFT JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
-        LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id;
+        LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id
+        GROUP BY a.article_id;
     """
     cursor.execute(query)
     articles = cursor.fetchall()
@@ -161,15 +162,16 @@ def get_article_by_id(id):
             a.read_time,
             a.head_url, 
             a.publish_date,
-            COALESCE(u.user_id, -1) AS user_id,
-            COALESCE(u.name, 'No author set') AS author_name,
-            COALESCE(c.name, 'No category set') AS category
+            GROUP_CONCAT(DISTINCT COALESCE(u.user_id, -1)) AS user_ids,
+            GROUP_CONCAT(DISTINCT COALESCE(u.name, 'No author set') SEPARATOR ', ') AS author_names,
+            GROUP_CONCAT(DISTINCT COALESCE(c.name, 'No category set') SEPARATOR ', ') AS category
         FROM TaNewsDB.articles a
         LEFT JOIN TaNewsDB.article_authors aa ON a.article_id = aa.article_id
         LEFT JOIN TaNewsDB.users u ON aa.user_id = u.user_id
         LEFT JOIN TaNewsDB.article_category ac ON a.article_id = ac.article_id
         LEFT JOIN TaNewsDB.categories c ON ac.category_id = c.category_id
         WHERE a.article_id = %s
+        GROUP BY a.article_id;
     """
     cursor.execute(query, (id,))
     article = cursor.fetchone()
@@ -179,3 +181,71 @@ def get_article_by_id(id):
     if article:
         return jsonify({'article': article})
     return jsonify({'error': 'Article not found'}), 404
+
+# Update an existing article
+@articles.route('/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_article(id):
+    try:
+        # Check if user is admin
+        user_id = get_jwt_identity()
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT is_admin FROM users WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if not user or not user["is_admin"]:
+            return jsonify({"error": "Unauthorized. Only admins can update articles."}), 403
+
+        # Get request data
+        data = request.get_json()
+        title = data.get("title")
+        read_time = data.get("read_time")
+        publish_date = data.get("publish_date")
+        category = data.get("category")
+        head_url = data.get("head_url")
+        text = data.get("text")
+
+        # Validate required fields
+        if not all([title, text, read_time, publish_date, head_url, category]):
+            return jsonify({'error': 'Missing required fields'}), 400
+
+        # Update article data
+        update_query = """
+            UPDATE TaNewsDB.articles 
+            SET title = %s, text = %s, read_time = %s, publish_date = %s, head_url = %s 
+            WHERE article_id = %s
+        """
+        cursor.execute(update_query, (title, text, read_time, publish_date, head_url, id))
+        
+        # Update category
+        # First, get the category ID
+        cursor.execute("SELECT category_id FROM categories WHERE name = %s", (category,))
+        category_result = cursor.fetchone()
+        
+        if category_result:
+            category_id = category_result.get('category_id')
+            
+            # Check if article-category relationship exists
+            cursor.execute("SELECT * FROM article_category WHERE article_id = %s", (id,))
+            existing_category = cursor.fetchone()
+            
+            if existing_category:
+                # Update existing category relationship
+                cursor.execute(
+                    "UPDATE article_category SET category_id = %s WHERE article_id = %s", 
+                    (category_id, id)
+                )
+            else:
+                # Create new category relationship
+                cursor.execute(
+                    "INSERT INTO article_category (article_id, category_id) VALUES (%s, %s)",
+                    (id, category_id)
+                )
+        
+        db.get_db().commit()
+        cursor.close()
+        
+        return jsonify({'message': 'Article updated successfully'}), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
