@@ -18,7 +18,6 @@ import AdminAddArticle from "./routes/AdminAddArticle.jsx";
 import AdminEditArticle from "./routes/AdminEditArticle.jsx";
 import ArticlePage from "./routes/ArticlesPage.jsx";
 import EditArticles from "./routes/EditArticles.jsx";
-import EditArticle from "./routes/EditArticle.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
