@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TopNav from "../components/TopNav";
-import SideBar from "../components/Sidebar";
 import "../styles/EditArticle.css";
 
 const EditArticle = () => {
@@ -124,7 +123,7 @@ const EditArticle = () => {
 
       if (response.ok) {
         alert("Article updated successfully!");
-        navigate("/authorized/edit-article");
+        navigate("/authorized/edit-article/");
       } else {
         setError(data.error || "Failed to update article");
       }
@@ -137,7 +136,6 @@ const EditArticle = () => {
     return (
       <>
         <TopNav />
-        <SideBar />
         <div className="edit-article-container">
           <p>Loading article...</p>
         </div>
@@ -148,7 +146,6 @@ const EditArticle = () => {
   return (
     <>
       <TopNav />
-      <SideBar />
       <div className="edit-article-container">
         <h2>Edit Article</h2>
         {error && <p className="error-message">{error}</p>}
@@ -232,7 +229,7 @@ const EditArticle = () => {
             <button
               type="button"
               className="cancel-button"
-              onClick={() => navigate("/authorized/edit-article")}
+              onClick={() => navigate("/authorized/edit-article/")}
             >
               Cancel
             </button>

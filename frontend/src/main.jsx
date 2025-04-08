@@ -33,7 +33,8 @@ const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/authorized/add-article", element: <AdminAddArticle /> },
-  { path: "/authorized/edit-article/:articleId", element: <AdminEditArticle /> },
+  { path: "/authorized/edit-article/", element: <EditArticles /> },
+  { path: "/authorized/edit/:id", element: <EditArticle /> },
   { path: "/article/:id", element: <ArticlePage /> },
 ]);
 

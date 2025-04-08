@@ -21,7 +21,7 @@ const Settings = () => {
   };
 
   const handleEditArticles = () => {
-    navigate("/authorized/edit-article");
+    navigate("/authorized/edit-article/");
   };
 
   return (

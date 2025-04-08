@@ -1,4 +1,3 @@
-/* Styles for the Article Peek Container */
 /* Ensure the entire page takes up at least the full viewport height */
 html,
 body {
@@ -21,7 +20,6 @@ body {
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 60px;
 }
 
 /* Main content wrapper (everything except TopNav, Sidebar, and Footer) */
@@ -30,6 +28,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  flex: 1 0 auto;
   transition: padding-left 0.3s ease-in-out;
 }
 
@@ -70,10 +69,6 @@ body {
   color: white;
   width: 100%;
   padding: 10px 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  text-align: center;
+  margin-top: auto;
   flex-shrink: 0;
-  height: 60px;
 }

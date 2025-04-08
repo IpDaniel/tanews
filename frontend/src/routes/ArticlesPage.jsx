@@ -9,8 +9,13 @@ const ArticlesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -66,9 +71,9 @@ const ArticlesPage = () => {
   if (loading) {
     return (
       <>
-        <SideBar />
+        <SideBar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <TopNav />
-        <div className="article-page-container">
+        <div className={`article-page-container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
           <p>Loading article...</p>
         </div>
       </>
@@ -78,9 +83,9 @@ const ArticlesPage = () => {
   if (error) {
     return (
       <>
-        <SideBar />
+        <SideBar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <TopNav />
-        <div className="article-page-container">
+        <div className={`article-page-container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
           <p className="error-message">Error: {error}</p>
           <button onClick={() => navigate('/')}>Return to Home</button>
         </div>
@@ -90,9 +95,9 @@ const ArticlesPage = () => {
 
   return (
     <>
-      <SideBar />
+      <SideBar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <TopNav />
-      <div className="article-page-container">
+      <div className={`article-page-container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
         {article && (
           <article className="article-content">
             {isAdmin && (
