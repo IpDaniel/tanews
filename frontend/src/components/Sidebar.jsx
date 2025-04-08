@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Sidebar.css";
 import WeatherWidget from "./Weather";
 
@@ -9,8 +9,7 @@ const STOCK_SYMBOLS = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "NVDA"];
 const date = new Date();
 const showDate = "3" + "/" + date.getDate() + "/" + date.getFullYear();
 
-function SideBar() {
-  const [isOpen, setIsOpen] = useState(true);
+function SideBar({ isOpen, toggleSidebar }) {
   const [stockData, setStockData] = useState({});
 
   let now = new Date().toLocaleTimeString();
@@ -53,43 +52,46 @@ function SideBar() {
   }, []);
 
   return (
-    <div className={`sidebar ${isOpen ? "open" : ""}`}>
-      <div className="sidebar-content">
-        <div className="clock-section">
-          <div className="Date">
-            <h2 align="center"> {showDate}</h2>
-          </div>
-          <div className="Time">
-            <h2 align="center"> {time}</h2>
-          </div>
-
-          <div className="stock-section">
-            <h3>Stock Prices</h3>
-            <div className="stock-grid">
-              {STOCK_SYMBOLS.map((symbol) => (
-                <div className="stock-card" key={symbol}>
-                  <span className="stock-symbol">{symbol}</span>
-                  <span className="stock-price">
-                    <a
-                      href={`https://finance.yahoo.com/quote/${symbol}`}
-                      target="_blank"
-                    >
-                      ${stockData[symbol] || "Loading..."}
-                    </a>
-                  </span>
-                </div>
-              ))}
+    <div className="sidebar-container">
+      <div className={`sidebar ${isOpen ? "open" : ""}`}>
+        <div className="sidebar-content">
+          <div className="clock-section">
+            <div className="Date">
+              <h2 align="center"> {showDate}</h2>
             </div>
-          </div>
+            <div className="Time">
+              <h2 align="center"> {time}</h2>
+            </div>
 
-          <div className="weather-section">
-            <h2>Weather:</h2>
-            <WeatherWidget city="Boston" />
+            <div className="stock-section">
+              <h3>Stock Prices</h3>
+              <div className="stock-grid">
+                {STOCK_SYMBOLS.map((symbol) => (
+                  <div className="stock-card" key={symbol}>
+                    <span className="stock-symbol">{symbol}</span>
+                    <span className="stock-price">
+                      
+                        href={`https://finance.yahoo.com/quote/${symbol}`}
+                        target="_blank"
+                      >
+                        ${stockData[symbol] || "Loading..."}
+                      </a>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="weather-section">
+              <h2>Weather:</h2>
+              <WeatherWidget city="Boston" />
+            </div>
           </div>
         </div>
       </div>
-
-      <button className="toggle-button" onClick={() => setIsOpen(!isOpen)}>
+      
+      {/* Toggle button outside of sidebar */}
+      <button className="toggle-button" onClick={toggleSidebar}>
         {isOpen ? "←" : "→"}
       </button>
     </div>

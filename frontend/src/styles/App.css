@@ -5,15 +5,63 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+body {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Main content container (everything except the footer) */
 .app-container {
-  flex: 1; /* Makes sure content expands to push the footer down */
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 60px;
+}
+
+/* Main content wrapper (everything except TopNav, Sidebar, and Footer) */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  transition: padding-left 0.3s ease-in-out;
+}
+
+/* Adjust main content when sidebar is open */
+.main-content.sidebar-open {
+  padding-left: 300px; /* Match sidebar width */
+}
+
+/* Adjust main content when sidebar is closed */
+.main-content.sidebar-closed {
+  padding-left: 0;
+}
+
+/* Common width container for search and article peeks */
+.width-container {
+  width: 90%;
+  transition: width 0.3s ease-in-out;
+  margin-left: 5%; /* Reduced left margin to push content more to the left */
+}
+
+/* When sidebar is open, adjust margin-left to compensate */
+.main-content.sidebar-open .width-container {
+  margin-left: 0;
+}
+
+/* Article peeks container */
+.article-peeks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 /* Footer should stick to the bottom */
@@ -22,8 +70,10 @@ body {
   color: white;
   width: 100%;
   padding: 10px 0;
-  position: relative; /* Change this */
+  position: absolute;
   bottom: 0;
+  left: 0;
   text-align: center;
-  flex-shrink: 0; /* Prevents the footer from shrinking */
+  flex-shrink: 0;
+  height: 60px;
 }

@@ -13,8 +13,7 @@
   margin-bottom: 20px;
   padding: 15px;
   cursor: pointer;
-  width: 70%;
-  margin-left: 350px;
+  width: 100%;
 }
 
 .article-peek-continer:hover {
@@ -36,26 +35,42 @@
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
+  gap: 8px; /* Add some spacing between elements */
 }
 
-/* Article category */
-.article-title {
-  font-size: 12px;
+/* Article header container for title and category */
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+/* Article category - positioned in top right */
+.article-category {
+  font-size: 11px;
   font-weight: bold;
-  color: #555;
+  color: #4b5ae4;
   text-transform: uppercase;
+  background-color: #f0f2ff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+  white-space: nowrap;
 }
 
 /* Article headline */
 .article-headline {
-  font-size: 16px;
+  font-size: 30px;
   font-weight: bold;
-  margin: 5px 0;
+  margin: 0;
+  flex: 1;
 }
 
 /* Article preview text */
 .article-preview {
-  font-size: 14px;
+  font-size: 13px;
   color: #777;
   line-height: 1.4;
   margin-bottom: 5px;
@@ -63,7 +78,7 @@
 
 /* Read time indicator */
 .article-read-time {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: #4caf50;
 }
