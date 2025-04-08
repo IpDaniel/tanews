@@ -9,8 +9,8 @@ const About = () => {
       id: 1,
       name: "Daniel Ip",
       role: "Liason 🥸",
-      description: "Daniel helped us a lot",
-      imageUrl: "https://via.placeholder.com/150",
+      description: "goated lead Daniel helped us a lot",
+      imageUrl: "../../public/daniel_tanews.png",
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ const About = () => {
       id: 3,
       name: "Connor Karr",
       role: "Developer",
-      description: "Developer",
+      description: "vibe coder final boss 👅",
       imageUrl:
         "https://media.licdn.com/dms/image/v2/D4E03AQHhOpjA9BlKFA/profile-displayphoto-shrink_400_400/B4EZSby6pMHAAg-/0/1737780604088?e=1749686400&v=beta&t=9iAuRBbGJnP43iVgRJb6RegqDIZxDr82kXD8MA-6mqs",
     },
@@ -60,7 +60,10 @@ const About = () => {
 
         <div className="mission-section">
           <h2>Our Mission</h2>
-          <p>TaNews</p>
+          <p>
+            TAMID at Northeastern's in house news platform architecture. Built
+            with Docker, React.js, Python, Flask, JSON Web Tokens and MySQL.{" "}
+          </p>
         </div>
 
         <div className="team-section">
