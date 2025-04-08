@@ -71,8 +71,9 @@
   display: flex;
   justify-content: center;
   gap: 40px;
-
   padding: 10px 0;
+  overflow-x: auto; /* Enable horizontal scrolling if too many categories */
+  white-space: nowrap;
 }
 
 .nav-bottom a {
@@ -81,6 +82,7 @@
   font-weight: bold;
   color: #3a50d9;
   position: relative;
+  transition: color 0.2s ease;
 }
 
 /* Vertical dividers between navigation items */
@@ -89,12 +91,18 @@
   position: absolute;
   width: 1px;
   height: 20px;
-  background-color: black;
+  background-color: #3a50d9;
   right: -20px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.nav-bottom Link:hover {
-  color: black;
+.nav-bottom a:hover {
+  color: #000;
+}
+
+/* Active category link */
+.nav-bottom a.active {
+  color: #000;
+  text-decoration: underline;
 }
