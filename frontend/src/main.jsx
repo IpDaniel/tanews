@@ -15,7 +15,6 @@ import Register from "./routes/Register.jsx";
 import Login from "./routes/Login.jsx";
 import Dashboard from "./routes/Dashboard.jsx";
 import AdminAddArticle from "./routes/AdminAddArticle.jsx";
-import AdminEditArticle from "./routes/AdminEditArticle.jsx";
 import ArticlePage from "./routes/ArticlesPage.jsx";
 import EditArticles from "./routes/EditArticles.jsx";
 import EditArticle from "./routes/EditArticle.jsx";

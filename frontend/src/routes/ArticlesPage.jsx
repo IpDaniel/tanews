@@ -100,13 +100,6 @@ const ArticlesPage = () => {
       <div className={`article-page-container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
         {article && (
           <article className="article-content">
-            {isAdmin && (
-              <div className="article-admin-controls">
-                <Link to={`/authorized/edit-article/${id}`} className="edit-button">
-                  Edit Article
-                </Link>
-              </div>
-            )}
             {article.head_url && (
               <img 
                 src={article.head_url} 
