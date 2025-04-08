@@ -20,62 +20,65 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setArticles(data.articles);
-        // Apply initial filtering if category is in URL
+        // Apply initial category filter if present in URL
         if (categoryFilter) {
-          filterArticlesByCategory(data.articles, categoryFilter);
+          const filtered = data.articles.filter((article) => 
+            article.category.includes(categoryFilter)
+          );
+          setFilteredArticles(filtered);
         } else {
           setFilteredArticles(data.articles);
         }
       })
       .catch((err) => console.error("Error fetching articles:", err));
-  }, []);
+  }, [categoryFilter]);
 
-  // Watch for changes in the category filter URL parameter
-  useEffect(() => {
-    if (articles.length > 0) {
-      if (categoryFilter) {
-        filterArticlesByCategory(articles, categoryFilter);
-      } else {
-        setFilteredArticles(articles);
-      }
-    }
-  }, [categoryFilter, articles]);
-
-  const filterArticlesByCategory = (articlesArray, category) => {
-    const filtered = articlesArray.filter((article) =>
-      article.category.includes(category)
-    );
-    setFilteredArticles(filtered);
-  };
-
-  // Toggle sidebar function
+  // Toggle sidebar function to be passed to the Sidebar component
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Handle search query changes
-  const handleSearch = (query) => {
-    if (!query.trim()) {
-      // If search is empty, show all articles or filter by category if present
-      if (categoryFilter) {
-        filterArticlesByCategory(articles, categoryFilter);
-      } else {
-        setFilteredArticles(articles);
-      }
-    } else {
-      // Filter by search query AND category if present
-      let filtered = articles.filter((article) =>
+  // Handle search and filter changes
+  const handleSearchAndFilter = (query, filters = {}) => {
+    let filtered = [...articles];
+    
+    // Apply category filter from URL if present
+    if (categoryFilter) {
+      filtered = filtered.filter((article) => 
+        article.category.includes(categoryFilter)
+      );
+    }
+    
+    // Apply search query
+    if (query && query.trim() !== "") {
+      filtered = filtered.filter((article) =>
         article.title.toLowerCase().includes(query.toLowerCase())
       );
-      
-      if (categoryFilter) {
-        filtered = filtered.filter((article) =>
-          article.category.includes(categoryFilter)
-        );
-      }
-      
-      setFilteredArticles(filtered);
     }
+    
+    // Apply readTime filter
+    if (filters.readTime) {
+      const maxTime = parseInt(filters.readTime);
+      filtered = filtered.filter((article) => 
+        article.read_time <= maxTime
+      );
+    }
+    
+    // Apply author filter
+    if (filters.author) {
+      filtered = filtered.filter((article) => 
+        article.author_names && article.author_names.includes(filters.author)
+      );
+    }
+    
+    // Apply category filter (from filter menu, not URL)
+    if (!categoryFilter && filters.category) {
+      filtered = filtered.filter((article) => 
+        article.category.includes(filters.category)
+      );
+    }
+    
+    setFilteredArticles(filtered);
   };
 
   return (
@@ -85,9 +88,12 @@ function App() {
       <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
         <div className="width-container">
           {categoryFilter && (
-            <h1 className="category-title">{categoryFilter} Articles</h1>
+            <h2 className="category-heading">{categoryFilter}</h2>
           )}
-          <SearchBar articles={articles} onQueryChange={handleSearch} />
+          <SearchBar 
+            articles={articles} 
+            onQueryChange={handleSearchAndFilter} 
+          />
         </div>
         <div className="article-peeks">
           {filteredArticles.length > 0 ? (
@@ -97,8 +103,8 @@ function App() {
               </div>
             ))
           ) : (
-            <div className="width-container">
-              <p className="no-articles">No articles found for {categoryFilter || "your search"}.</p>
+            <div className="width-container no-results">
+              <p>No articles found matching your criteria.</p>
             </div>
           )}
         </div>

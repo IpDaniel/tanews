@@ -25,9 +25,9 @@ const Settings = () => {
   };
 
   return (
-    <>
+    <div className="app-container">
       <TopNav />
-      <main>
+      <div className="main-content">
         <div className="settings-container">
           <h2>Settings</h2>
           {error && <p className="error-message">{error}</p>}
@@ -35,7 +35,7 @@ const Settings = () => {
           {isLoggedIn ? (
             <div className="settings-buttons">
               <button 
-                className="settings-button" 
+                className="settings-button primary" 
                 onClick={handleAddArticle}
               >
                 Add New Article
@@ -48,14 +48,17 @@ const Settings = () => {
               </button>
             </div>
           ) : (
-            <p className="not-logged-in">
-              Please log in to access these features
-            </p>
+            <div className="not-logged-in">
+              <p>Please log in to access these features</p>
+              <button onClick={() => navigate('/login')} className="login-redirect-button">
+                Go to Login
+              </button>
+            </div>
           )}
         </div>
-      </main>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

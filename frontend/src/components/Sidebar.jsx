@@ -7,7 +7,7 @@ const STOCK_SYMBOLS = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "NVDA"];
 
 // for time/date
 const date = new Date();
-const showDate = "3" + "/" + date.getDate() + "/" + date.getFullYear();
+const showDate = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
 
 function SideBar({ isOpen, toggleSidebar }) {
   const [stockData, setStockData] = useState({});

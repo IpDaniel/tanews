@@ -1,0 +1,125 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 80vh;
+    flex: 1;
+  }
+  
+  .contact-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .contact-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .contact-header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .contact-section {
+    margin-bottom: 50px;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+  }
+  
+  .contact-section h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .contact-section p {
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .connect-section {
+    margin-bottom: 40px;
+  }
+  
+  .connect-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .connect-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  
+  .connect-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    background-color: white;
+  }
+  
+  .connect-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .connect-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+  }
+  
+  .connect-item h3 {
+    margin: 10px 0 5px;
+    color: #333;
+  }
+  
+  .connect-item p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .connect-item a {
+    color: #4b5ae4;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  
+  .connect-item a:hover {
+    color: #3a48b5;
+    text-decoration: underline;
+  }
+  
+  .team-section {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .team-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .team-section p {
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+  }
