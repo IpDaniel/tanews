@@ -1,12 +1,28 @@
-import React from "react";
-import "../styles/TopNav.css"; // Ensure this path is correct
-import { Link } from "react-router-dom"; // Make sure you're using react-router-dom
+import React, { useState, useEffect } from "react";
+import "../styles/TopNav.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const TopNav = () => {
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch categories from the API
+    fetch("http://localhost:4000/api/articles/categories")
+      .then(response => response.json())
+      .then(data => {
+        if (data.categories) {
+          setCategories(data.categories);
+        }
+      })
+      .catch(error => console.error("Error fetching categories:", error));
+  }, []);
+
   return (
     <>
       <div className="topnav-container">
         <div className="nav-left">
+          {/* Fixed anchor tag for the logo link */}
           <a
             href="https://www.nutamidtech.org/"
             target="_blank"
@@ -16,9 +32,9 @@ const TopNav = () => {
           </a>
         </div>
         <div className="nav-center">
-          <a href="/">
+          <Link to="/">
             <img src="/tanews.svg" alt="tanews-logo" className="title-logo" />
-          </a>
+          </Link>
         </div>
         <div className="nav-right">
           <Link to="/settings">
@@ -38,11 +54,15 @@ const TopNav = () => {
         </div>
       </div>
       <div className="nav-bottom">
-        <Link to="/">TAMID</Link>
-        <Link to="/">TOP NEWS</Link>
-        <Link to="/">OPINION</Link>
-        <Link to="/">TECH</Link>
-        <Link to="/">STARTUPS</Link>
+        <Link to="/">ALL</Link>
+        {categories.map((cat, index) => (
+          <Link 
+            key={index} 
+            to={`/?category=${cat.name}`}
+          >
+            {cat.name.toUpperCase()}
+          </Link>
+        ))}
       </div>
     </>
   );

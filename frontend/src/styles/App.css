@@ -72,3 +72,19 @@ body {
   margin-top: auto;
   flex-shrink: 0;
 }
+
+/* Category title styling */
+.category-title {
+  font-size: 24px;
+  color: #4b5ae4;
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* No articles message styling */
+.no-articles {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  margin: 40px 0;
+}
