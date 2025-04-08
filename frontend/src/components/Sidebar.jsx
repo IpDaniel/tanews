@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import React, { useEffect, useState } from "react";
 import "../styles/Sidebar.css";
 import WeatherWidget from "./Weather";
 
@@ -10,7 +9,6 @@ const STOCK_SYMBOLS = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA", "NVDA"];
 const date = new Date();
 const showDate = "3" + "/" + date.getDate() + "/" + date.getFullYear();
 
-function SideBar({ isOpen, toggleSidebar }) {
 function SideBar({ isOpen, toggleSidebar }) {
   const [stockData, setStockData] = useState({});
 
@@ -64,16 +62,6 @@ function SideBar({ isOpen, toggleSidebar }) {
             <div className="Time">
               <h2 align="center"> {time}</h2>
             </div>
-    <div className="sidebar-container">
-      <div className={`sidebar ${isOpen ? "open" : ""}`}>
-        <div className="sidebar-content">
-          <div className="clock-section">
-            <div className="Date">
-              <h2 align="center"> {showDate}</h2>
-            </div>
-            <div className="Time">
-              <h2 align="center"> {time}</h2>
-            </div>
 
             <div className="stock-section">
               <h3>Stock Prices</h3>
@@ -82,27 +70,10 @@ function SideBar({ isOpen, toggleSidebar }) {
                   <div className="stock-card" key={symbol}>
                     <span className="stock-symbol">{symbol}</span>
                     <span className="stock-price">
-                      
+                      <a
                         href={`https://finance.yahoo.com/quote/${symbol}`}
                         target="_blank"
-                      >
-                        ${stockData[symbol] || "Loading..."}
-                      </a>
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="stock-section">
-              <h3>Stock Prices</h3>
-              <div className="stock-grid">
-                {STOCK_SYMBOLS.map((symbol) => (
-                  <div className="stock-card" key={symbol}>
-                    <span className="stock-symbol">{symbol}</span>
-                    <span className="stock-price">
-                      
-                        href={`https://finance.yahoo.com/quote/${symbol}`}
-                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         ${stockData[symbol] || "Loading..."}
                       </a>
@@ -119,9 +90,6 @@ function SideBar({ isOpen, toggleSidebar }) {
           </div>
         </div>
       </div>
-      
-      {/* Toggle button outside of sidebar */}
-      <button className="toggle-button" onClick={toggleSidebar}>
       
       {/* Toggle button outside of sidebar */}
       <button className="toggle-button" onClick={toggleSidebar}>
