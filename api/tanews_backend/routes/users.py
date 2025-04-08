@@ -213,3 +213,22 @@ def is_admin():
 
 
 
+# Get user details (including email)
+@users.route('/details', methods=['GET'])
+@jwt_required()
+def get_user_details():
+    user_id = get_jwt_identity()
+    
+    cursor = db.get_db().cursor()
+    cursor.execute("SELECT name, email, image_url FROM users WHERE user_id = %s", (user_id,))
+    user = cursor.fetchone()
+    cursor.close()
+
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    return jsonify({
+        'name': user['name'],
+        'email': user['email'],
+        'image_url': user['image_url']
+    }), 200

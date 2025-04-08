@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import TopNav from "../components/TopNav.jsx";
+import Footer from "../components/Footer.jsx";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -27,7 +28,6 @@ const Login = () => {
       if (!response.ok) throw new Error(data.error || "Login failed");
 
       localStorage.setItem("token", data.access_token); // Store JWT token
-      console.log(data.access_token)
       navigate("/dashboard"); // Redirect to a protected page
     } catch (err) {
       setError(err.message);
@@ -38,36 +38,50 @@ const Login = () => {
     navigate("/register");
   };
 
-
   return (
-    <>
+    <div className="app-container">
       <TopNav />
-      <div className="login-container">
-        <h2>Login</h2>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            required
-          />
-          <button type="submit">Log In</button>
-        </form>
-        <p className="dont-have-account">Don't have an account?</p>
-        <button onClick={goToRegister} className="register-button">
-          Register Here
-        </button>
+      <div className="main-content">
+        <div className="auth-container">
+          <div className="auth-card">
+            <h2>Login to TaNews</h2>
+            {error && <p className="error-message">{error}</p>}
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="auth-button primary">Log In</button>
+            </form>
+            <div className="auth-footer">
+              <p>Don't have an account?</p>
+              <button onClick={goToRegister} className="auth-button secondary">
+                Register Here
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
