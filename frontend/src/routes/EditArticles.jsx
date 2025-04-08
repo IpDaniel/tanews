@@ -27,26 +27,31 @@ const EditArticles = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/articles/`) // no auth needed to access this page?
+    fetch(`http://localhost:4000/api/articles/`)
       .then((res) => res.json())
       .then((data) => setArticles(data.articles))
       .catch((err) => console.error("Error fetching articles:", err));
-  }, []); // only make this call on page mount
+  }, []);
   
   return (
-    <>
+    <div className="app-container">
       <TopNav />
       <SideBar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-        <div>Admin page for editing articles.</div>
+        <div className="width-container">
+          <h2>Edit Articles</h2>
+          <p>Select an article to edit:</p>
+        </div>
         <div className="article-peeks">
           {articles.map((article, index) => (
-            <EditPeek key={index} article={article} />
+            <div key={index} className="width-container">
+              <EditPeek article={article} />
+            </div>
           ))}
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

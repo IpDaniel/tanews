@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/ArticlePeek.css"; // Using the same CSS file as ArticlePeek
+import "../styles/ArticlePeek.css"; // Use the same CSS file
 import { Link } from "react-router-dom";
 
 const EditPeek = ({ article }) => {
