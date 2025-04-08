@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Dashboard.css"; // Import external CSS
+import "../styles/Dashboard.css";
 import TopNav from "../components/TopNav.jsx";
+import Footer from "../components/Footer.jsx";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -44,21 +45,24 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <div className="app-container">
       <TopNav />
-      <div className="dashboard-container">
-        <h2>Dashboard</h2>
-        {error && <p className="error-message">{error}</p>}
-        {user ? (
-          <>
-            <p>{user}</p>
-            <button onClick={handleLogout}>Logout</button>
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
+      <div className="main-content">
+        <div className="dashboard-container">
+          <h2>Dashboard</h2>
+          {error && <p className="error-message">{error}</p>}
+          {user ? (
+            <>
+              <p>{user}</p>
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 

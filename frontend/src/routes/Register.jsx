@@ -1,7 +1,8 @@
-import react, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Register.css";
+import "../styles/Login.css"; // Using the same CSS file for consistency
 import TopNav from "../components/TopNav.jsx";
+import Footer from "../components/Footer.jsx";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -45,62 +46,85 @@ const Register = () => {
     }
   };
 
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
-    <>
+    <div className="app-container">
       <TopNav />
-      <div className="register-container">
-        <div className="register-box">
-          <h2>Register</h2>
-          {error && <p className="error">{error}</p>}
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              required
-            />
-
-            <div className="checkbox-group">
-              <label>
+      <div className="main-content">
+        <div className="auth-container">
+          <div className="auth-card">
+            <h2>Create an Account</h2>
+            {error && <p className="error-message">{error}</p>}
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Full Name</label>
                 <input
-                  type="checkbox"
-                  name="is_admin"
-                  checked={formData.is_admin}
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your full name"
                   onChange={handleChange}
+                  required
                 />
-                Admin
-              </label>
-              <label>
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
                 <input
-                  type="checkbox"
-                  name="is_author"
-                  checked={formData.is_author}
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
                   onChange={handleChange}
+                  required
                 />
-                Author
-              </label>
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Create a password"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="checkbox-group">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="is_author"
+                    checked={formData.is_author}
+                    onChange={handleChange}
+                  />
+                  Register as Author
+                </label>
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="is_admin"
+                    checked={formData.is_admin}
+                    onChange={handleChange}
+                  />
+                  Register as Admin
+                </label>
+              </div>
+              <button type="submit" className="auth-button primary">Create Account</button>
+            </form>
+            <div className="auth-footer">
+              <p>Already have an account?</p>
+              <button onClick={goToLogin} className="auth-button secondary">
+                Log In
+              </button>
             </div>
-
-            <button type="submit">Sign Up</button>
-          </form>
+          </div>
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
