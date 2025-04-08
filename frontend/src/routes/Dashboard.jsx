@@ -52,10 +52,19 @@ const Dashboard = () => {
           <h2>Dashboard</h2>
           {error && <p className="error-message">{error}</p>}
           {user ? (
-            <>
-              <p>{user}</p>
-              <button onClick={handleLogout}>Logout</button>
-            </>
+            <div className="dashboard-content">
+              <p className="welcome-message">{user}</p>
+              
+              <div className="dashboard-actions">
+                <h4>Quick Links:</h4>
+                <div className="action-buttons">
+                  <button onClick={() => navigate("/profile")}>Profile</button>
+                  <button onClick={() => navigate("/settings")}>Settings</button>
+                </div>
+              </div>
+              
+              <button onClick={handleLogout} className="logout-button">Logout</button>
+            </div>
           ) : (
             <p>Loading...</p>
           )}
